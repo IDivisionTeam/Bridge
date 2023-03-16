@@ -11,8 +11,7 @@ class UserPassword extends FormzInput<String, UserPasswordError> {
     r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
   );
 
-  late final validationResultCache =
-      _regexExp.hasMatch(value) ? null : UserPasswordError.invalid;
+  late final validationResultCache = _regexExp.hasMatch(value) ? null : UserPasswordError.invalid;
 
   @override
   UserPasswordError? validator(String value) {

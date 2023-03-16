@@ -8,12 +8,12 @@ environment:
 dependencies:
   core_datastore:
     path: ../datastore
+  core_model:
+    path: ../model
   core_network:
     path: ../network
   flutter:
     sdk: flutter
-  model:
-    path: ../model
 
 dev_dependencies:
   very_good_analysis: ^4.0.0

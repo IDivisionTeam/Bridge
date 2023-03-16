@@ -11,8 +11,7 @@ class UserEmail extends FormzInput<String, UserEmailError> {
     r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
   );
 
-  late final validationResultCache =
-      _regexExp.hasMatch(value) ? null : UserEmailError.invalid;
+  late final validationResultCache = _regexExp.hasMatch(value) ? null : UserEmailError.invalid;
 
   @override
   UserEmailError? validator(String value) {

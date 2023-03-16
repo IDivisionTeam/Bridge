@@ -9,8 +9,7 @@ class NetworkResponseUser {
   final bool success;
   final NetworkUser user;
 
-  factory NetworkResponseUser.fromJson(Map<String, dynamic> json) =>
-      _$NetworkResponseUserFromJson(json);
+  factory NetworkResponseUser.fromJson(Map<String, dynamic> json) => _$NetworkResponseUserFromJson(json);
 
   Map<String, dynamic> toJson() => _$NetworkResponseUserToJson(this);
 }
@@ -23,8 +22,7 @@ class NetworkUser {
   final String nickname;
   final String token;
 
-  factory NetworkUser.fromJson(Map<String, dynamic> json) =>
-      _$NetworkUserFromJson(json);
+  factory NetworkUser.fromJson(Map<String, dynamic> json) => _$NetworkUserFromJson(json);
 
   Map<String, dynamic> toJson() => _$NetworkUserToJson(this);
 }

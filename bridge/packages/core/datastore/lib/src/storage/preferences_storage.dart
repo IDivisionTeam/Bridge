@@ -1,4 +1,4 @@
-import 'package:model/model.dart';
+import 'package:core_model/model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesStorage {
@@ -13,8 +13,7 @@ class PreferencesStorage {
     final String? userNickname = await prefs.getString(_userNicknameKey);
     final String? userEmail = await prefs.getString(_userEmailKey);
 
-    if (userId == null || userNickname == null || userEmail == null)
-      return null;
+    if (userId == null || userNickname == null || userEmail == null) return null;
 
     return User(id: userId, email: userEmail, nickname: userNickname);
   }

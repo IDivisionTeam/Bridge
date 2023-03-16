@@ -1,12 +1,11 @@
 import 'package:bloc/bloc.dart';
-import 'package:common/common.dart';
+import 'package:core_common/common.dart';
 import 'package:core_data/data.dart';
+import 'package:core_model/model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
-import 'package:model/model.dart';
 
 part 'signup_event.dart';
-
 part 'signup_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {

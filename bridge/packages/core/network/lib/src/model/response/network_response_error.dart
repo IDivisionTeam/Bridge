@@ -9,8 +9,7 @@ class NetworkResponseError {
   final bool success;
   final String message;
 
-  factory NetworkResponseError.fromJson(Map<String, dynamic> json) =>
-      _$NetworkResponseErrorFromJson(json);
+  factory NetworkResponseError.fromJson(Map<String, dynamic> json) => _$NetworkResponseErrorFromJson(json);
 
   Map<String, dynamic> toJson() => _$NetworkResponseErrorToJson(this);
 }

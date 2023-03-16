@@ -11,21 +11,21 @@ dependencies:
   bloc: ^8.1.1
   core_data:
     path: packages/core/data
+  core_model:
+    path: packages/core/model
   cupertino_icons: ^1.0.2
   equatable: ^2.0.5
   go_router: ^6.2.0
+  feature_onboarding:
+    path: packages/feature/onboarding
+  feature_login:
+    path: packages/feature/login
+  feature_signup:
+    path: packages/feature/signup
   flutter_bloc: ^8.1.2
   flutter:
     sdk: flutter
   formz: ^0.5.0+1
-  onboarding:
-    path: packages/feature/onboarding
-  login:
-    path: packages/feature/login
-  model:
-    path: packages/core/model
-  signup:
-    path: packages/feature/signup
 
 dev_dependencies:
   flutter_test:

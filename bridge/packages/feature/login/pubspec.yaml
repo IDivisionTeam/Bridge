@@ -1,4 +1,4 @@
-name: login
+name: feature_login
 description: feature - login
 publish_to: 'none'
 
@@ -7,24 +7,23 @@ environment:
 
 dependencies:
   bloc: ^8.1.1
-  common:
+  core_common:
     path: ../../core/common
   core_data:
     path: ../../core/data
-  cupertino_icons: ^1.0.2
-  designsystem:
+  core_designsystem:
     path: ../../core/designsystem
+  core_model:
+    path: ../../core/model
+  cupertino_icons: ^1.0.2
   equatable: ^2.0.5
   go_router: ^6.2.0
   flutter_bloc: ^8.1.2
   flutter:
     sdk: flutter
   formz: ^0.5.0+1
-  model:
-    path: ../../core/model
 
 dev_dependencies:
-
   flutter_test:
     sdk: flutter
 

@@ -1,8 +1,6 @@
 part of 'login_bloc.dart';
 
-class LoginState extends Equatable
-    with FormzMixin
-    implements Copyable<LoginState> {
+class LoginState extends Equatable with FormzMixin implements Copyable<LoginState> {
   LoginState({
     required this.status,
     required this.isTextObscured,
@@ -37,7 +35,7 @@ class LoginState extends Equatable
   }
 
   @override
-  List<Object> get props => [isTextObscured, email, password];
+  List<Object> get props => [status, isTextObscured, email, password];
 
   @override
   List<FormzInput<dynamic, dynamic>> get inputs => [email, password];

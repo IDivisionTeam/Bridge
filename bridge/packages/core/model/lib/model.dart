@@ -1,4 +1,4 @@
-library model;
+library core_model;
 
 export 'src/input/inputs.dart';
 export 'src/playing_card.dart';

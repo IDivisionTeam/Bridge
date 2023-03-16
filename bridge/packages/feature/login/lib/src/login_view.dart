@@ -1,9 +1,9 @@
-import 'package:designsystem/designsystem.dart';
+import 'package:core_designsystem/designsystem.dart';
+import 'package:core_model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:login/src/bloc/login_bloc.dart';
-import 'package:model/model.dart';
+import 'package:feature_login/src/bloc/login_bloc.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key, required this.onNavBackClick});
@@ -60,8 +60,7 @@ class _UserEmailInput extends StatelessWidget {
               labelText: 'Email',
               errorText: _getError(state.email.displayError),
             ),
-            onChanged: (value) =>
-                context.read<LoginBloc>().add(EmailChange(value)),
+            onChanged: (value) => context.read<LoginBloc>().add(EmailChange(value)),
           ),
         );
       },
@@ -85,8 +84,7 @@ class _UserPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
       buildWhen: (previous, current) {
-        return previous.password != current.password ||
-            previous.isTextObscured != current.isTextObscured;
+        return previous.password != current.password || previous.isTextObscured != current.isTextObscured;
       },
       builder: (context, state) {
         return Padding(
@@ -104,8 +102,7 @@ class _UserPassword extends StatelessWidget {
                 },
               ),
             ),
-            onChanged: (value) =>
-                context.read<LoginBloc>().add(PasswordChange(value)),
+            onChanged: (value) => context.read<LoginBloc>().add(PasswordChange(value)),
           ),
         );
       },

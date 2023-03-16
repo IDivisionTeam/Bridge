@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 
-import 'package:designsystem/designsystem.dart';
+import 'package:core_designsystem/designsystem.dart';
+import 'package:core_ui/ui.dart';
 import 'package:flutter/material.dart';
-import 'package:ui/ui.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({
@@ -34,8 +34,7 @@ class OnboardingScreen extends StatelessWidget {
                     // FIXME(onboarding): randomize rank & suit.
                     rank: 'T',
                     suit: 'S',
-                    size:
-                        Size(448, 608), // FIXME(onboarding): extract card size.
+                    size: Size(448, 608), // FIXME(onboarding): extract card size.
                   ),
                 ),
                 Transform(
@@ -45,8 +44,7 @@ class OnboardingScreen extends StatelessWidget {
                     // FIXME(onboarding): randomize rank & suit.
                     rank: 'K',
                     suit: 'D',
-                    size:
-                        Size(448, 608), // FIXME(onboarding): extract card size.
+                    size: Size(448, 608), // FIXME(onboarding): extract card size.
                   ),
                 ),
               ],

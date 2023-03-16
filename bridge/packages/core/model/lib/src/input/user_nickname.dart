@@ -9,8 +9,7 @@ class UserNickname extends FormzInput<String, UserNicknameError> {
 
   static final _regexExp = RegExp(r'^\w+$');
 
-  late final validationResultCache =
-      _regexExp.hasMatch(value) ? null : UserNicknameError.restrictedCharacters;
+  late final validationResultCache = _regexExp.hasMatch(value) ? null : UserNicknameError.restrictedCharacters;
 
   @override
   UserNicknameError? validator(String value) {

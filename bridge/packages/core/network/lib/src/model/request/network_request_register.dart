@@ -1,4 +1,4 @@
-import 'package:common/common.dart';
+import 'package:core_common/common.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'network_request_register.g.dart';
@@ -11,8 +11,7 @@ class NetworkRequestRegister implements Encodable {
   final String nickname;
   final String password;
 
-  factory NetworkRequestRegister.fromJson(Map<String, dynamic> json) =>
-      _$NetworkRequestRegisterFromJson(json);
+  factory NetworkRequestRegister.fromJson(Map<String, dynamic> json) => _$NetworkRequestRegisterFromJson(json);
 
   Map<String, dynamic> toJson() => _$NetworkRequestRegisterToJson(this);
 }

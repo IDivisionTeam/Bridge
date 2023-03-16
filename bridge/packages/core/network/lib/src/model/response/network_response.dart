@@ -13,5 +13,6 @@ class NetworkResponse<T> {
         this.error = error;
 
   bool get hasData => data != null;
+
   bool get hasError => error != null;
 }

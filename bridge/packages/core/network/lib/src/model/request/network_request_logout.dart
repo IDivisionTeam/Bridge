@@ -1,4 +1,4 @@
-import 'package:common/common.dart';
+import 'package:core_common/common.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'network_request_logout.g.dart';
@@ -10,8 +10,7 @@ class NetworkRequestLogout implements Encodable {
   final String email;
   final String token;
 
-  factory NetworkRequestLogout.fromJson(Map<String, dynamic> json) =>
-      _$NetworkRequestLogoutFromJson(json);
+  factory NetworkRequestLogout.fromJson(Map<String, dynamic> json) => _$NetworkRequestLogoutFromJson(json);
 
   Map<String, dynamic> toJson() => _$NetworkRequestLogoutToJson(this);
 }
