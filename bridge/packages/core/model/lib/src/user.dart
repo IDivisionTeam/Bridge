@@ -1,4 +1,4 @@
-import 'package:common/common.dart';
+import 'package:core_common/common.dart';
 
 class User implements Copyable<User> {
   const User({

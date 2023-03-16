@@ -1,6 +1,6 @@
-import 'package:model/src/rank.dart';
-import 'package:model/src/sprite.dart';
-import 'package:model/src/suit.dart';
+import 'package:core_model/src/rank.dart';
+import 'package:core_model/src/sprite.dart';
+import 'package:core_model/src/suit.dart';
 
 class PlayingCard {
   PlayingCard({

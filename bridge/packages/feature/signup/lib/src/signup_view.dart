@@ -1,9 +1,9 @@
-import 'package:designsystem/designsystem.dart';
+import 'package:core_designsystem/designsystem.dart';
+import 'package:core_model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:model/model.dart';
-import 'package:signup/src/bloc/signup_bloc.dart';
+import 'package:feature_signup/src/bloc/signup_bloc.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key, required this.onNavBackClick});

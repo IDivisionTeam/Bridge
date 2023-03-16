@@ -1,4 +1,4 @@
-import 'package:model/model.dart';
+import 'package:core_model/model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesStorage {

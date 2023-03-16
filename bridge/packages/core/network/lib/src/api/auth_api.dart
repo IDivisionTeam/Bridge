@@ -1,12 +1,10 @@
-import 'dart:io';
-
-import 'package:http/http.dart' as http;
-import 'package:http/retry.dart';
 import 'package:core_network/src/model/request/network_request_login.dart';
 import 'package:core_network/src/model/request/network_request_logout.dart';
 import 'package:core_network/src/model/request/network_request_register.dart';
 import 'package:core_network/src/util/decoder_extension.dart';
 import 'package:core_network/src/util/encoder_extension.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/retry.dart';
 
 const _baseUrl = 'bridge.zalizniak.duckdns.org';
 

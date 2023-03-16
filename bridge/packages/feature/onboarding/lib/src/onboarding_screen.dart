@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 
-import 'package:designsystem/designsystem.dart';
+import 'package:core_designsystem/designsystem.dart';
+import 'package:core_ui/ui.dart';
 import 'package:flutter/material.dart';
-import 'package:ui/ui.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({

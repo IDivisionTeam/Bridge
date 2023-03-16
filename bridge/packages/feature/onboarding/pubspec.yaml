@@ -1,4 +1,4 @@
-name: onboarding
+name: feature_onboarding
 description: feature - onboarding
 publish_to: 'none'
 
@@ -8,17 +8,16 @@ environment:
 dependencies:
   bloc: ^8.1.1
   cupertino_icons: ^1.0.2
-  designsystem:
+  core_designsystem:
     path: ../../core/designsystem
+  core_ui:
+    path: ../../core/ui
   go_router: ^6.2.0
   flutter_bloc: ^8.1.2
   flutter:
     sdk: flutter
-  ui:
-    path: ../../core/ui
 
 dev_dependencies:
-
   flutter_test:
     sdk: flutter
 

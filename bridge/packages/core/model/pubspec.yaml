@@ -1,4 +1,4 @@
-name: model
+name: core_model
 description: core - model
 publish_to: 'none'
 
@@ -6,7 +6,7 @@ environment:
   sdk: '>=2.19.2 <3.0.0'
 
 dependencies:
-  common:
+  core_common:
     path: ../common
   flutter:
     sdk: flutter

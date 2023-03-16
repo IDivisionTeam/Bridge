@@ -1,4 +1,4 @@
-name: ui
+name: core_ui
 description: core - ui
 publish_to: 'none'
 
@@ -7,16 +7,15 @@ environment:
 
 dependencies:
   bloc: ^8.1.1
+  core_model:
+    path: ../../core/model
   cupertino_icons: ^1.0.2
   go_router: ^6.2.0
   flutter_bloc: ^8.1.2
   flutter:
     sdk: flutter
-  model:
-    path: ../../core/model
 
 dev_dependencies:
-
   flutter_test:
     sdk: flutter
 

@@ -1,5 +1,5 @@
 import 'package:core_datastore/src/storage/preferences_storage.dart';
-import 'package:model/model.dart';
+import 'package:core_model/model.dart';
 
 class UserLocalDataSource {
   final _prefs = PreferencesStorage();

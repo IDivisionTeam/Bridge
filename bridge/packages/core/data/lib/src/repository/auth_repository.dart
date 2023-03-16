@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:common/common.dart';
+import 'package:core_common/common.dart';
 import 'package:core_datastore/datastore.dart';
 import 'package:core_network/network.dart';
 

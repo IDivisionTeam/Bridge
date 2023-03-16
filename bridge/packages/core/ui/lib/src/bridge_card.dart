@@ -1,8 +1,8 @@
 import 'dart:ui' as ui;
 
+import 'package:core_model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:model/model.dart';
 
 class BridgeCard extends StatelessWidget {
   const BridgeCard({

@@ -1,9 +1,9 @@
-import 'package:designsystem/designsystem.dart';
+import 'package:core_designsystem/designsystem.dart';
+import 'package:core_model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:login/src/bloc/login_bloc.dart';
-import 'package:model/model.dart';
+import 'package:feature_login/src/bloc/login_bloc.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key, required this.onNavBackClick});

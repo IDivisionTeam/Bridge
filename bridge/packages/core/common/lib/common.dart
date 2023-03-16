@@ -1,4 +1,4 @@
-library common;
+library core_common;
 
 export 'src/copyable.dart';
 export 'src/disposable.dart';

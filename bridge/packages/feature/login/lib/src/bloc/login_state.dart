@@ -37,7 +37,7 @@ class LoginState extends Equatable
   }
 
   @override
-  List<Object> get props => [isTextObscured, email, password];
+  List<Object> get props => [status, isTextObscured, email, password];
 
   @override
   List<FormzInput<dynamic, dynamic>> get inputs => [email, password];

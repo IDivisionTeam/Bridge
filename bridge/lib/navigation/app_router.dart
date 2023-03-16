@@ -1,8 +1,8 @@
+import 'package:feature_login/login.dart' as login;
+import 'package:feature_onboarding/onboarding.dart' as onboarding;
+import 'package:feature_signup/signup.dart' as signup;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:login/login.dart' as login;
-import 'package:onboarding/onboarding.dart' as onboarding;
-import 'package:signup/signup.dart' as signup;
 
 class AppRouter {
   AppRouter() {
