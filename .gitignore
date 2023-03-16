@@ -39,6 +39,8 @@ bridge/.packages
 bridge/.pub-cache/
 bridge/.pub/
 **/build/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
 
 # Symbolication related
 app.*.symbols

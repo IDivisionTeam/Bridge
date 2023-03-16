@@ -1,6 +1,7 @@
+import 'package:core_data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:signup/src/signup_cubit.dart';
+import 'package:signup/src/bloc/signup_bloc.dart';
 import 'package:signup/src/signup_view.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -11,7 +12,10 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => SignUpCubit(),
+      create: (_) => SignUpBloc(
+        authenticationRepository:
+            RepositoryProvider.of<AuthenticationRepository>(context),
+      ),
       child: SignUpView(
         onNavBackClick: onNavBackClick,
       ),
