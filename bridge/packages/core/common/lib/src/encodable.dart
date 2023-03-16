@@ -1,2 +1,2 @@
-/** Marker Interface */
+/// Marker Interface
 abstract class Encodable {}

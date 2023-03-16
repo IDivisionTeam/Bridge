@@ -13,7 +13,8 @@ class PreferencesStorage {
     final String? userNickname = await prefs.getString(_userNicknameKey);
     final String? userEmail = await prefs.getString(_userEmailKey);
 
-    if (userId == null || userNickname == null || userEmail == null) return null;
+    if (userId == null || userNickname == null || userEmail == null)
+      return null;
 
     return User(id: userId, email: userEmail, nickname: userNickname);
   }

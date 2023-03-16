@@ -60,7 +60,8 @@ class _UserEmailInput extends StatelessWidget {
               labelText: 'Email',
               errorText: _getError(state.email.displayError),
             ),
-            onChanged: (value) => context.read<LoginBloc>().add(EmailChange(value)),
+            onChanged: (value) =>
+                context.read<LoginBloc>().add(EmailChange(value)),
           ),
         );
       },
@@ -84,7 +85,8 @@ class _UserPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
       buildWhen: (previous, current) {
-        return previous.password != current.password || previous.isTextObscured != current.isTextObscured;
+        return previous.password != current.password ||
+            previous.isTextObscured != current.isTextObscured;
       },
       builder: (context, state) {
         return Padding(
@@ -102,7 +104,8 @@ class _UserPassword extends StatelessWidget {
                 },
               ),
             ),
-            onChanged: (value) => context.read<LoginBloc>().add(PasswordChange(value)),
+            onChanged: (value) =>
+                context.read<LoginBloc>().add(PasswordChange(value)),
           ),
         );
       },

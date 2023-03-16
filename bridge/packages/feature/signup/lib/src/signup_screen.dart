@@ -13,7 +13,8 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => SignUpBloc(
-        authenticationRepository: RepositoryProvider.of<AuthenticationRepository>(context),
+        authenticationRepository:
+            RepositoryProvider.of<AuthenticationRepository>(context),
       ),
       child: SignUpView(
         onNavBackClick: onNavBackClick,

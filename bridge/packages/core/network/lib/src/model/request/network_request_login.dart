@@ -10,7 +10,8 @@ class NetworkRequestLogin implements Encodable {
   final String email;
   final String password;
 
-  factory NetworkRequestLogin.fromJson(Map<String, dynamic> json) => _$NetworkRequestLoginFromJson(json);
+  factory NetworkRequestLogin.fromJson(Map<String, dynamic> json) =>
+      _$NetworkRequestLoginFromJson(json);
 
   Map<String, dynamic> toJson() => _$NetworkRequestLoginToJson(this);
 }

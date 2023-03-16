@@ -10,7 +10,8 @@ class NetworkRequestLogout implements Encodable {
   final String email;
   final String token;
 
-  factory NetworkRequestLogout.fromJson(Map<String, dynamic> json) => _$NetworkRequestLogoutFromJson(json);
+  factory NetworkRequestLogout.fromJson(Map<String, dynamic> json) =>
+      _$NetworkRequestLogoutFromJson(json);
 
   Map<String, dynamic> toJson() => _$NetworkRequestLogoutToJson(this);
 }

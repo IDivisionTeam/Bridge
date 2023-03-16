@@ -13,7 +13,8 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => LoginBloc(
-        authenticationRepository: RepositoryProvider.of<AuthenticationRepository>(context),
+        authenticationRepository:
+            RepositoryProvider.of<AuthenticationRepository>(context),
       ),
       child: LoginView(
         onNavBackClick: onNavBackClick,
