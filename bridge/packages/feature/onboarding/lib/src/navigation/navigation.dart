@@ -6,3 +6,7 @@ const String onboardingRoute = '/onboarding';
 extension OnboardingNavigation on BuildContext {
   void navigateToOnboarding() => go(onboardingRoute);
 }
+
+extension OnboardingNavigationRouter on GoRouter {
+  void navigateToOnboarding() => go(onboardingRoute);
+}

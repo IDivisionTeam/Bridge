@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BridgeButton extends StatelessWidget {
-  final VoidCallback onClick;
+  final VoidCallback? onClick;
   final Widget? child;
   final ButtonStyle? style;
 

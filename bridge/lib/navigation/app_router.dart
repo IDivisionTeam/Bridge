@@ -5,22 +5,17 @@ import 'package:onboarding/onboarding.dart' as onboarding;
 import 'package:signup/signup.dart' as signup;
 
 class AppRouter {
-  AppRouter({required this.shouldShowOnboarding, required this.isLoggedIn}) {
+  AppRouter() {
     _router = GoRouter(
       routes: [
-        /* Main Routes */
+        /* Entry Route */
         GoRoute(
           path: '/',
-          redirect: (_, __) {
-            if (!isLoggedIn) {
-              if (shouldShowOnboarding) return onboarding.onboardingRoute;
-              return login.loginRoute;
-            }
-            return '/';
-          },
-          builder: (_, __) =>
-              Placeholder(), // TODO(home): replace with real HomeScreen.
+          builder: (_, __) => Placeholder(), // TODO(home): replace with progress screen.
         ),
+
+        /* Main Routes */
+        // TODO(home): add main routes
 
         /* Auth Routes */
         ShellRoute(
@@ -28,7 +23,7 @@ class AppRouter {
               return MaterialApp(
                 theme: ThemeData(
                   // TODO(theme): config theme.
-                  primarySwatch: Colors.green,
+                  primarySwatch: Colors.yellow,
                 ),
                 home: Scaffold(
                   body: SafeArea(
@@ -46,32 +41,38 @@ class AppRouter {
     );
   }
 
-  final bool shouldShowOnboarding;
-  final bool isLoggedIn;
-
-  late GoRouter _router;
-
-  GoRouter get router => _router;
-
   final GoRoute _onboardingRoute = GoRoute(
     path: onboarding.onboardingRoute,
-    builder: (context, state) => onboarding.OnboardingScreen(
-      onLoginNavClick: () => context.navigateToLogin(),
-      onSignUpNavClick: () => context.navigateToSignUp(),
+    pageBuilder: (context, state) => MaterialPage(
+      key: state.pageKey,
+      child: onboarding.OnboardingScreen(
+        onLoginNavClick: () => context.navigateToLogin(),
+        onSignUpNavClick: () => context.navigateToSignUp(),
+      ),
     ),
   );
 
   final GoRoute _loginRoute = GoRoute(
     path: login.loginRoute,
-    builder: (context, state) => login.LoginScreen(
-      onNavBackClick: () => context.navigateToOnboarding(),
+    pageBuilder: (context, state) => MaterialPage(
+      key: state.pageKey,
+      child: login.LoginScreen(
+        onNavBackClick: () => context.navigateToOnboarding(),
+      ),
     ),
   );
 
   final GoRoute _signUpRoute = GoRoute(
     path: signup.signUpRoute,
-    builder: (context, state) => signup.SignUpScreen(
-      onNavBackClick: () => context.navigateToOnboarding(),
+    pageBuilder: (context, state) => MaterialPage(
+      key: state.pageKey,
+      child: signup.SignUpScreen(
+        onNavBackClick: () => context.navigateToOnboarding(),
+      ),
     ),
   );
+
+  late final GoRouter _router;
+
+  GoRouter get router => _router;
 }

@@ -6,3 +6,7 @@ const String loginRoute = '/login';
 extension LoginNavigation on BuildContext {
   void navigateToLogin() => go(loginRoute);
 }
+
+extension LoginNavigationRouter on GoRouter {
+  void navigateToOnboarding() => go(loginRoute);
+}
