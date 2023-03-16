@@ -82,7 +82,8 @@ class _UserNicknameInput extends StatelessWidget {
               helperText: 'At least 3 characters, maximum 15',
               errorText: _getError(state.nickname.displayError),
             ),
-            onChanged: (value) => context.read<SignUpBloc>().add(NicknameChange(value)),
+            onChanged: (value) =>
+                context.read<SignUpBloc>().add(NicknameChange(value)),
           ),
         );
       },
@@ -119,7 +120,8 @@ class _UserEmailInput extends StatelessWidget {
               labelText: 'Email',
               errorText: _getError(state.email.displayError),
             ),
-            onChanged: (value) => context.read<SignUpBloc>().add(EmailChange(value)),
+            onChanged: (value) =>
+                context.read<SignUpBloc>().add(EmailChange(value)),
           ),
         );
       },
@@ -143,7 +145,8 @@ class _UserPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SignUpBloc, SignUpState>(
       buildWhen: (previous, current) {
-        return previous.password != current.password || previous.isPasswordObscured != current.isPasswordObscured;
+        return previous.password != current.password ||
+            previous.isPasswordObscured != current.isPasswordObscured;
       },
       builder: (context, state) {
         return Padding(
@@ -153,7 +156,8 @@ class _UserPassword extends StatelessWidget {
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
               labelText: 'Password',
-              helperText: 'At least 8 characters including one letter and number',
+              helperText:
+                  'At least 8 characters including one letter and number',
               errorText: _getError(state.password.displayError),
               suffixIcon: IconButton(
                 icon: _getIcon(isTextObscured: state.isPasswordObscured),
@@ -162,7 +166,8 @@ class _UserPassword extends StatelessWidget {
                 },
               ),
             ),
-            onChanged: (value) => context.read<SignUpBloc>().add(PasswordChange(value)),
+            onChanged: (value) =>
+                context.read<SignUpBloc>().add(PasswordChange(value)),
           ),
         );
       },
@@ -198,7 +203,8 @@ class _UserConfirmPassword extends StatelessWidget {
     return BlocBuilder<SignUpBloc, SignUpState>(
       buildWhen: (previous, current) {
         return previous.confirmPassword != current.confirmPassword ||
-            previous.isConfirmPasswordObscured != current.isConfirmPasswordObscured;
+            previous.isConfirmPasswordObscured !=
+                current.isConfirmPasswordObscured;
       },
       builder: (context, state) {
         return Padding(
@@ -216,7 +222,8 @@ class _UserConfirmPassword extends StatelessWidget {
                 },
               ),
             ),
-            onChanged: (value) => context.read<SignUpBloc>().add(ConfirmPasswordChange(value)),
+            onChanged: (value) =>
+                context.read<SignUpBloc>().add(ConfirmPasswordChange(value)),
           ),
         );
       },

@@ -1,6 +1,8 @@
 part of 'login_bloc.dart';
 
-class LoginState extends Equatable with FormzMixin implements Copyable<LoginState> {
+class LoginState extends Equatable
+    with FormzMixin
+    implements Copyable<LoginState> {
   LoginState({
     required this.status,
     required this.isTextObscured,

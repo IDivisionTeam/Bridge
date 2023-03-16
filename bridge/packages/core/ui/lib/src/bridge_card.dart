@@ -67,13 +67,16 @@ class PlayingCardPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     canvas
       ..save()
-      ..scale(0.4, 0.4) // FIXME(onboarding): calculate using phone width divided by the card width.
+      ..scale(0.4,
+          0.4) // FIXME(onboarding): calculate using phone width divided by the card width.
       ..translate(-card.sprite.left, -card.sprite.top)
-      ..clipRect(Rect.fromLTWH(card.sprite.left, card.sprite.top, width, height))
+      ..clipRect(
+          Rect.fromLTWH(card.sprite.left, card.sprite.top, width, height))
       ..drawImage(spriteAtlas, Offset.zero, Paint())
       ..restore();
   }
 
   @override
-  bool shouldRepaint(covariant PlayingCardPainter oldDelegate) => card != oldDelegate.card;
+  bool shouldRepaint(covariant PlayingCardPainter oldDelegate) =>
+      card != oldDelegate.card;
 }

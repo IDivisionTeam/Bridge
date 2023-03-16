@@ -34,7 +34,8 @@ class OnboardingScreen extends StatelessWidget {
                     // FIXME(onboarding): randomize rank & suit.
                     rank: 'T',
                     suit: 'S',
-                    size: Size(448, 608), // FIXME(onboarding): extract card size.
+                    size:
+                        Size(448, 608), // FIXME(onboarding): extract card size.
                   ),
                 ),
                 Transform(
@@ -44,7 +45,8 @@ class OnboardingScreen extends StatelessWidget {
                     // FIXME(onboarding): randomize rank & suit.
                     rank: 'K',
                     suit: 'D',
-                    size: Size(448, 608), // FIXME(onboarding): extract card size.
+                    size:
+                        Size(448, 608), // FIXME(onboarding): extract card size.
                   ),
                 ),
               ],
