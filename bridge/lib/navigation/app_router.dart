@@ -1,3 +1,5 @@
+import 'package:feature_home/home.dart';
+import 'package:feature_home/home.dart' as home;
 import 'package:feature_login/login.dart' as login;
 import 'package:feature_onboarding/onboarding.dart' as onboarding;
 import 'package:feature_signup/signup.dart' as signup;
@@ -12,11 +14,28 @@ class AppRouter {
         GoRoute(
           path: '/',
           builder: (_, __) =>
-              Placeholder(), // TODO(home): replace with progress screen.
+              Placeholder(), // TODO(splash): replace with progress screen.
         ),
 
         /* Main Routes */
-        // TODO(home): add main routes
+        ShellRoute(
+          builder: (context, state, child) {
+            return MaterialApp(
+              theme: ThemeData(
+                // TODO(theme): config theme.
+                primarySwatch: Colors.yellow,
+              ),
+              home: Scaffold(
+                body: SafeArea(
+                  child: child,
+                ),
+              ),
+            );
+          },
+          routes: [
+            _homeRoute,
+          ],
+        ),
 
         /* Auth Routes */
         ShellRoute(
@@ -59,6 +78,7 @@ class AppRouter {
       key: state.pageKey,
       child: login.LoginScreen(
         onNavBackClick: () => context.navigateToOnboarding(),
+        onNavHomeRequest: () => context.navigateToHome(),
       ),
     ),
   );
@@ -69,7 +89,16 @@ class AppRouter {
       key: state.pageKey,
       child: signup.SignUpScreen(
         onNavBackClick: () => context.navigateToOnboarding(),
+        onNavHomeRequest: () => context.navigateToHome(),
       ),
+    ),
+  );
+
+  final GoRoute _homeRoute = GoRoute(
+    path: home.homeRoute,
+    pageBuilder: (context, state) => MaterialPage(
+      key: state.pageKey,
+      child: home.HomeScreen(),
     ),
   );
 
