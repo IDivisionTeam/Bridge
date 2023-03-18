@@ -9,12 +9,13 @@ class BridgeCard extends StatelessWidget {
     super.key,
     required this.rank,
     required this.suit,
-    required this.size,
+    this.ratio = 0.6,
   });
 
   final String rank;
   final String suit;
-  final Size size;
+  final double ratio;
+  final Size _cardSize = const Size(448, 608);
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +25,8 @@ class BridgeCard extends StatelessWidget {
         final playingCard = PlayingCard(
           rank: rank,
           suit: suit,
-          width: size.width,
-          height: size.height,
+          width: _cardSize.width,
+          height: _cardSize.height,
         );
 
         if (snapshot.hasData) {
@@ -33,8 +34,8 @@ class BridgeCard extends StatelessWidget {
             painter: PlayingCardPainter(
               snapshot.data!,
               playingCard,
-              size.width,
-              size.height,
+              _cardSize,
+              ratio,
             ),
           );
         }
@@ -56,22 +57,21 @@ class BridgeCard extends StatelessWidget {
 }
 
 class PlayingCardPainter extends CustomPainter {
-  PlayingCardPainter(this.spriteAtlas, this.card, this.width, this.height);
+  PlayingCardPainter(this.spriteAtlas, this.card, this.cardSize, this.ratio);
 
-  ui.Image spriteAtlas;
-  double width;
-  double height;
-  PlayingCard card;
+  final ui.Image spriteAtlas;
+  final Size cardSize;
+  final double ratio;
+  final PlayingCard card;
 
   @override
   void paint(Canvas canvas, Size size) {
     canvas
       ..save()
-      ..scale(0.4,
-          0.4) // FIXME(onboarding): calculate using phone width divided by the card width.
+      ..scale(ratio, ratio)
       ..translate(-card.sprite.left, -card.sprite.top)
-      ..clipRect(
-          Rect.fromLTWH(card.sprite.left, card.sprite.top, width, height))
+      ..clipRect(Rect.fromLTWH(
+          card.sprite.left, card.sprite.top, cardSize.width, cardSize.height))
       ..drawImage(spriteAtlas, Offset.zero, Paint())
       ..restore();
   }

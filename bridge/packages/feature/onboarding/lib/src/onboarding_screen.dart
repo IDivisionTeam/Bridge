@@ -30,23 +30,21 @@ class OnboardingScreen extends StatelessWidget {
                 Transform(
                   alignment: Alignment.center,
                   transform: Matrix4.rotationZ(170 * math.pi / 180),
-                  child: const BridgeCard(
-                    // FIXME(onboarding): randomize rank & suit.
+                  child: BridgeCard(
+                    // FIXME(playing-card): randomize rank & suit.
                     rank: 'T',
                     suit: 'S',
-                    size:
-                        Size(448, 608), // FIXME(onboarding): extract card size.
+                    ratio: 0.4,
                   ),
                 ),
                 Transform(
                   alignment: Alignment.center,
                   transform: Matrix4.rotationZ(200 * math.pi / 180),
-                  child: const BridgeCard(
-                    // FIXME(onboarding): randomize rank & suit.
+                  child: BridgeCard(
+                    // FIXME(playing-card): randomize rank & suit.
                     rank: 'K',
                     suit: 'D',
-                    size:
-                        Size(448, 608), // FIXME(onboarding): extract card size.
+                    ratio: 0.4,
                   ),
                 ),
               ],
