@@ -98,7 +98,9 @@ class AppRouter {
     path: home.homeRoute,
     pageBuilder: (context, state) => MaterialPage(
       key: state.pageKey,
-      child: home.HomeScreen(),
+      child: home.HomeScreen(
+        onNavAuthRequest: () => context.navigateToLogin(),
+      ),
     ),
   );
 

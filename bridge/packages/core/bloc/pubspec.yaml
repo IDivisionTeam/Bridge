@@ -1,0 +1,20 @@
+name: core_bloc
+description: core - bloc
+publish_to: 'none'
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+
+dependencies:
+  bloc: ^8.1.1
+  core_data:
+    path: ../data
+  core_model:
+    path: ../model
+  equatable: ^2.0.5
+  flutter_bloc: ^8.1.2
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  very_good_analysis: ^4.0.0

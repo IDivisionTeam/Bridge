@@ -1,5 +1,5 @@
-import 'package:bridge/authentication/authentication_bloc.dart';
 import 'package:bridge/navigation/app_router.dart';
+import 'package:core_bloc/bloc.dart';
 import 'package:core_data/data.dart';
 import 'package:feature_home/home.dart';
 import 'package:feature_onboarding/onboarding.dart';
