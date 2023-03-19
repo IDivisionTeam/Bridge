@@ -64,7 +64,7 @@ class AuthenticationBloc
     final token = await _tryGetToken();
 
     if (user != null && token != null) {
-      _authenticationRepository.logout(email: user.email, token: token);
+      await _authenticationRepository.logout(email: user.email, token: token);
     }
   }
 

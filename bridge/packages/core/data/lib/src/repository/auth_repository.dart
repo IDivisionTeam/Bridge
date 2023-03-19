@@ -7,7 +7,7 @@ import 'package:core_network/network.dart';
 enum AuthenticationStatus { unknown, authenticated, unauthenticated }
 
 class AuthenticationRepository implements Disposable {
-  final _controller = StreamController<AuthenticationStatus>();
+  final _controller = StreamController<AuthenticationStatus>.broadcast();
 
   final _networkSource = AuthNetworkDataSource();
   final _tokenLocalSource = TokenLocalDataSource();
@@ -31,7 +31,9 @@ class AuthenticationRepository implements Disposable {
     required String email,
     required String password,
   }) async {
-    _networkSource.login(email: email, password: password).then((response) {
+    await _networkSource
+        .login(email: email, password: password)
+        .then((response) {
       if (response.hasData) {
         final user = response.data!;
         _userLocalSource.setUser(
@@ -45,7 +47,7 @@ class AuthenticationRepository implements Disposable {
     required String email,
     required String token,
   }) async {
-    _networkSource.logout(email: email, token: token).then((_) {
+    await _networkSource.logout(email: email, token: token).then((_) {
       _tokenLocalSource.deleteToken();
       _userLocalSource.deleteUser();
     }).whenComplete(() {
@@ -58,7 +60,7 @@ class AuthenticationRepository implements Disposable {
     required String nickname,
     required String password,
   }) async {
-    _networkSource
+    await _networkSource
         .signup(email: email, nickname: nickname, password: password)
         .then((value) => login(email: email, password: password));
   }

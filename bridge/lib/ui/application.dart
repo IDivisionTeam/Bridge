@@ -1,5 +1,5 @@
-import 'package:bridge/authentication/authentication_bloc.dart';
 import 'package:bridge/ui/app_view.dart';
+import 'package:core_bloc/bloc.dart';
 import 'package:core_data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,8 +32,15 @@ class _ApplicationState extends State<Application> {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider.value(
-      value: _authenticationRepository,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AuthenticationRepository>(
+            create: (context) => _authenticationRepository),
+        RepositoryProvider<UserRepository>(
+            create: (context) => _userRepository),
+        RepositoryProvider<TokenRepository>(
+            create: (context) => _tokenRepository),
+      ],
       child: BlocProvider(
         create: (_) => AuthenticationBloc(
           authenticationRepository: _authenticationRepository,
