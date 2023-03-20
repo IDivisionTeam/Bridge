@@ -16,9 +16,8 @@ class AuthenticationRepository implements Disposable {
   Stream<AuthenticationStatus> get status async* {
     await Future<void>.delayed(const Duration(seconds: 1));
 
-    final token =
-        await _tokenLocalSource.getToken().then((token) => token.orEmpty());
-    if (token.isEmpty) {
+    final token = await _tokenLocalSource.getToken();
+    if (token == null) {
       yield AuthenticationStatus.unauthenticated;
     } else {
       yield AuthenticationStatus.authenticated;

@@ -2,6 +2,7 @@ import 'package:feature_home/home.dart';
 import 'package:feature_home/home.dart' as home;
 import 'package:feature_login/login.dart' as login;
 import 'package:feature_onboarding/onboarding.dart' as onboarding;
+import 'package:feature_room_list/room_list.dart' as roomList;
 import 'package:feature_signup/signup.dart' as signup;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -13,8 +14,7 @@ class AppRouter {
         /* Entry Route */
         GoRoute(
           path: '/',
-          builder: (_, __) =>
-              Placeholder(), // TODO(splash): replace with progress screen.
+          builder: (_, __) => Placeholder(), // TODO(splash): replace with progress screen.
         ),
 
         /* Main Routes */
@@ -34,6 +34,7 @@ class AppRouter {
           },
           routes: [
             _homeRoute,
+            _roomListRoute,
           ],
         ),
 
@@ -100,7 +101,16 @@ class AppRouter {
       key: state.pageKey,
       child: home.HomeScreen(
         onNavAuthRequest: () => context.navigateToLogin(),
+        onNavJoinGameRequest: () => context.navigateToRoomList(),
       ),
+    ),
+  );
+
+  final GoRoute _roomListRoute = GoRoute(
+    path: roomList.roomListRoute,
+    pageBuilder: (context, state) => MaterialPage(
+      key: state.pageKey,
+      child: roomList.RoomListScreen(),
     ),
   );
 

@@ -26,6 +26,8 @@ dependencies:
     path: packages/feature/login
   feature_signup:
     path: packages/feature/signup
+  feature_room_list:
+    path: packages/feature/room_list
   flutter_bloc: ^8.1.2
   flutter:
     sdk: flutter
