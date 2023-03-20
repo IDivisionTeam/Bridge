@@ -11,7 +11,8 @@ class RoomListView extends StatefulWidget {
 }
 
 class _RoomListViewState extends State<RoomListView> {
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   Widget build(BuildContext context) {

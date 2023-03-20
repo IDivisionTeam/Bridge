@@ -14,7 +14,8 @@ class AppRouter {
         /* Entry Route */
         GoRoute(
           path: '/',
-          builder: (_, __) => Placeholder(), // TODO(splash): replace with progress screen.
+          builder: (_, __) =>
+              Placeholder(), // TODO(splash): replace with progress screen.
         ),
 
         /* Main Routes */

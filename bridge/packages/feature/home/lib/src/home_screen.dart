@@ -42,16 +42,20 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<AuthenticationRepository>(create: (context) => _authenticationRepository),
-        RepositoryProvider<UserRepository>(create: (context) => _userRepository),
-        RepositoryProvider<TokenRepository>(create: (context) => _tokenRepository),
+        RepositoryProvider<AuthenticationRepository>(
+            create: (context) => _authenticationRepository),
+        RepositoryProvider<UserRepository>(
+            create: (context) => _userRepository),
+        RepositoryProvider<TokenRepository>(
+            create: (context) => _tokenRepository),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider<HomeBloc>(create: (context) => HomeBloc()),
           BlocProvider<AuthenticationBloc>(
             create: (context) => AuthenticationBloc(
-              authenticationRepository: RepositoryProvider.of<AuthenticationRepository>(context),
+              authenticationRepository:
+                  RepositoryProvider.of<AuthenticationRepository>(context),
               userRepository: RepositoryProvider.of<UserRepository>(context),
               tokenRepository: RepositoryProvider.of<TokenRepository>(context),
             ),

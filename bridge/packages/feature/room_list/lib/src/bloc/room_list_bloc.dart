@@ -32,7 +32,8 @@ class RoomListBloc extends Bloc<RoomListEvent, RoomListState> {
       final String? token = await _tokenRepository.getToken();
       final User? user = await _userRepository.getUser();
       if (token != null && user != null) {
-        final List<Room> rooms = await _roomRepository.listRooms(token: token, userId: user.id);
+        final List<Room> rooms =
+            await _roomRepository.listRooms(token: token, userId: user.id);
         emit(state.copy(rooms: rooms));
       }
     } catch (_) {
