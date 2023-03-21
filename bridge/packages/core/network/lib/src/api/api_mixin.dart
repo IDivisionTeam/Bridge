@@ -14,7 +14,7 @@ mixin ApiMixin {
   static const _baseUrl = 'bridge.zalizniak.duckdns.org';
 
   @protected
-  Future<NetworkResponse<Map<String, dynamic>>> post({
+  Future<NetworkResponse> post({
     required String to,
     required Encodable? encodable,
   }) async {
@@ -39,7 +39,7 @@ mixin ApiMixin {
   }
 
   @protected
-  Future<NetworkResponse<Map<String, dynamic>>> get({
+  Future<NetworkResponse> get({
     required String from,
     required Map<String, dynamic>? parameters,
   }) async {
@@ -73,7 +73,7 @@ mixin ApiMixin {
     };
   }
 
-  NetworkResponse<T> _extractError<T>(
+  NetworkResponse _extractError(
     int statusCode,
     Map<String, dynamic> response,
   ) {

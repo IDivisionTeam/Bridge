@@ -1,8 +1,8 @@
-class NetworkResponse<T> {
-  final T? data;
+class NetworkResponse {
+  final Map<String, dynamic>? data;
   final Exception? error;
 
-  NetworkResponse.success(T data)
+  NetworkResponse.success(Map<String, dynamic> data)
       : this.data = data,
         error = null;
 
