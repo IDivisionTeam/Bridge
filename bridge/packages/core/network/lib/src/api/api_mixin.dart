@@ -1,4 +1,9 @@
+import 'dart:html';
+
 import 'package:core_common/common.dart';
+import 'package:core_network/src/model/exception/exceptions.dart';
+import 'package:core_network/src/model/response/network_response.dart';
+import 'package:core_network/src/model/response/network_response_error.dart';
 import 'package:core_network/src/util/decoder_extension.dart';
 import 'package:core_network/src/util/encoder_extension.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +14,7 @@ mixin ApiMixin {
   static const _baseUrl = 'bridge.zalizniak.duckdns.org';
 
   @protected
-  Future<Map<String, dynamic>> post({
+  Future<NetworkResponse<Map<String, dynamic>>> post({
     required String to,
     required Encodable? encodable,
   }) async {
@@ -22,14 +27,19 @@ mixin ApiMixin {
         body: encodable?.json,
       );
 
-      return response.responseBody;
+      final body = response.responseBody;
+      final statusCode = response.statusCode;
+      if (statusCode == HttpStatus.ok) {
+        return NetworkResponse.success(body);
+      }
+      return _extractError(statusCode, body);
     } finally {
       client.close();
     }
   }
 
   @protected
-  Future<Map<String, dynamic>> get({
+  Future<NetworkResponse<Map<String, dynamic>>> get({
     required String from,
     required Map<String, dynamic>? parameters,
   }) async {
@@ -41,7 +51,12 @@ mixin ApiMixin {
         Uri.http(_baseUrl, from, parameters),
       );
 
-      return response.responseBody;
+      final body = response.responseBody;
+      final statusCode = response.statusCode;
+      if (statusCode == HttpStatus.ok) {
+        return NetworkResponse.success(body);
+      }
+      return _extractError(statusCode, body);
     } finally {
       client.close();
     }
@@ -56,5 +71,39 @@ mixin ApiMixin {
       'user_id': userId,
       'token': token,
     };
+  }
+
+  NetworkResponse<T> _extractError<T>(
+    int statusCode,
+    Map<String, dynamic> response,
+  ) {
+    final errorMessage = NetworkResponseError.fromJson(response).message;
+    final Exception error;
+
+    switch (statusCode) {
+      case HttpStatus.internalServerError:
+        error = InternalServerException(errorMessage);
+        break;
+      case HttpStatus.noContent:
+        error = NoContentException(errorMessage);
+        break;
+      case HttpStatus.badGateway:
+        error = BadRequestException(errorMessage);
+        break;
+      case HttpStatus.unauthorized:
+        error = UnauthorizedException(errorMessage);
+        break;
+      case HttpStatus.forbidden:
+        error = ForbiddenException(errorMessage);
+        break;
+      case HttpStatus.notFound:
+        error = NotFoundException(errorMessage);
+        break;
+      default:
+        error = UnexpectedException(errorMessage);
+        break;
+    }
+
+    return NetworkResponse.failure(error);
   }
 }
