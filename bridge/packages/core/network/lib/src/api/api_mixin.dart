@@ -1,4 +1,4 @@
-import 'dart:html';
+import 'dart:io';
 
 import 'package:core_common/common.dart';
 import 'package:core_network/src/model/exception/exceptions.dart';
