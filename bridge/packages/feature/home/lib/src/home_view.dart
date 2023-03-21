@@ -12,9 +12,11 @@ class HomeView extends StatelessWidget {
   const HomeView({
     super.key,
     required this.onNavAuthRequest,
+    required this.onNavJoinGameRequest,
   });
 
   final VoidCallback? onNavAuthRequest;
+  final VoidCallback? onNavJoinGameRequest;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +73,7 @@ class HomeView extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: BridgeButton(
                 onClick: () {
-                  // TODO(rooms-list): add navigation to Rooms List
+                  onNavJoinGameRequest?.call();
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(36),
