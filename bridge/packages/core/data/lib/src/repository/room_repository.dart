@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:core_common/common.dart';
 import 'package:core_model/model.dart';
 import 'package:core_network/network.dart';
 
 class RoomRepository implements Disposable {
+  final _controller = StreamController<Room>();
   final _networkSource = RoomsNetworkDataSource();
 
   Future<String?> createRoom({
@@ -15,7 +18,7 @@ class RoomRepository implements Disposable {
           userId: userId,
           token: token,
         )
-        .then((value) => value.data);
+        .then((result) => result.getOrNull());
   }
 
   Future<bool?> deleteRoom({
@@ -29,7 +32,7 @@ class RoomRepository implements Disposable {
           userId: userId,
           token: token,
         )
-        .then((value) => value.data);
+        .then((result) => result.getOrNull());
   }
 
   Future<bool?> joinRoom({
@@ -43,7 +46,7 @@ class RoomRepository implements Disposable {
           userId: userId,
           token: token,
         )
-        .then((value) => value.data);
+        .then((result) => result.getOrNull());
   }
 
   Future<List<Room>> listRooms({
@@ -57,11 +60,10 @@ class RoomRepository implements Disposable {
       userId: userId,
       token: token,
     )
-        .then((value) {
-      final data = value.data;
-      if (data == null) return List.empty();
+        .then((result) {
+      final roomList = result.getOrDefault(List.empty());
 
-      return data.map((room) {
+      return roomList.map((room) {
         return Room(
           id: room.id,
           host: RoomUser(
@@ -91,8 +93,8 @@ class RoomRepository implements Disposable {
       userId: userId,
       token: token,
     )
-        .then((value) {
-      final room = value.data;
+        .then((result) {
+      final room = result.getOrNull();
       if (room == null) return null;
 
       return Room(
@@ -113,7 +115,5 @@ class RoomRepository implements Disposable {
   }
 
   @override
-  void dispose() {
-    // TODO(room-list): handle getRoom dispose as Stream.
-  }
+  void dispose() => _controller.close();
 }
