@@ -22,6 +22,8 @@ dependencies:
     path: packages/feature/home
   feature_onboarding:
     path: packages/feature/onboarding
+  feature_lobby:
+    path: packages/feature/lobby
   feature_login:
     path: packages/feature/login
   feature_signup:

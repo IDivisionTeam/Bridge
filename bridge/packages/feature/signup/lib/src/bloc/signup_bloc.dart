@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:core_common/common.dart';
 import 'package:core_data/data.dart';
 import 'package:core_model/model.dart';

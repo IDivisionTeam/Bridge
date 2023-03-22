@@ -30,12 +30,15 @@ class AuthenticationRepository implements Disposable {
     required String email,
     required String password,
   }) async {
-    await _networkSource.login(email: email, password: password).then((result) {
-      result.onSuccess((user) {
-        _userLocalSource.setUser(
+    await _networkSource
+        .login(email: email, password: password)
+        .then((result) async {
+      final user = result.getOrNull();
+      if (user != null) {
+        await _userLocalSource.setUser(
             id: user.id, email: email, nickname: user.nickname);
-        _tokenLocalSource.setToken(token: user.token);
-      });
+        await _tokenLocalSource.setToken(token: user.token);
+      }
     }).whenComplete(() => _controller.add(AuthenticationStatus.authenticated));
   }
 

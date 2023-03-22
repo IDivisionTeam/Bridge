@@ -1,23 +1,26 @@
 import 'package:core_data/data.dart';
-import 'package:feature_room_list/src/bloc/room_list_bloc.dart';
-import 'package:feature_room_list/src/room_list_view.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:feature_lobby/src/lobby_view.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RoomListScreen extends StatefulWidget {
-  const RoomListScreen({
-    super.key,
-    this.onNavJoinLobbyRequest,
-  });
+import 'bloc/lobby_bloc.dart';
 
-  final void Function(String?)? onNavJoinLobbyRequest;
+class LobbyScreen extends StatefulWidget {
+  const LobbyScreen({
+    super.key,
+    String roomId = '',
+  }) : _roomId = roomId;
+
+  final String _roomId;
 
   @override
-  State<RoomListScreen> createState() => _RoomListState();
+  State<LobbyScreen> createState() => _LobbyState();
 }
 
-class _RoomListState extends State<RoomListScreen> {
+class _LobbyState extends State<LobbyScreen> {
   late final RoomRepository _roomRepository;
+
+  // late final SessionRepository _sessionRepository;
   late final UserRepository _userRepository;
   late final TokenRepository _tokenRepository;
 
@@ -25,6 +28,7 @@ class _RoomListState extends State<RoomListScreen> {
   void initState() {
     super.initState();
     _roomRepository = RoomRepository();
+    // _sessionRepository = SessionRepository();
     _userRepository = UserRepository();
     _tokenRepository = TokenRepository();
   }
@@ -44,14 +48,13 @@ class _RoomListState extends State<RoomListScreen> {
         ),
       ],
       child: BlocProvider(
-        create: (_) => RoomListBloc(
+        create: (_) => LobbyBloc(
           roomRepository: _roomRepository,
+          // sessionRepository: _sessionRepository,
           userRepository: _userRepository,
           tokenRepository: _tokenRepository,
-        )..add(RoomListFetch()),
-        child: RoomListView(
-          onNavJoinLobbyRequest: widget.onNavJoinLobbyRequest,
-        ),
+        )..add(FetchLobby(widget._roomId)),
+        child: LobbyView(),
       ),
     );
   }
