@@ -10,10 +10,12 @@ class HomeScreen extends StatefulWidget {
     super.key,
     required this.onNavAuthRequest,
     required this.onNavJoinGameRequest,
+    required this.onNavHostGameRequest,
   });
 
   final VoidCallback? onNavAuthRequest;
   final VoidCallback? onNavJoinGameRequest;
+  final void Function(String?)? onNavHostGameRequest;
 
   @override
   State createState() => _HomeScreenState();
@@ -21,6 +23,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late final AuthenticationRepository _authenticationRepository;
+  late final RoomRepository _roomRepository;
   late final UserRepository _userRepository;
   late final TokenRepository _tokenRepository;
 
@@ -28,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _authenticationRepository = AuthenticationRepository();
+    _roomRepository = RoomRepository();
     _userRepository = UserRepository();
     _tokenRepository = TokenRepository();
   }
@@ -44,6 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
       providers: [
         RepositoryProvider<AuthenticationRepository>(
             create: (context) => _authenticationRepository),
+        RepositoryProvider<RoomRepository>(
+            create: (context) => _roomRepository),
         RepositoryProvider<UserRepository>(
             create: (context) => _userRepository),
         RepositoryProvider<TokenRepository>(
@@ -51,7 +57,15 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<HomeBloc>(create: (context) => HomeBloc()),
+          BlocProvider<HomeBloc>(
+              create: (context) => HomeBloc(
+                    roomRepository:
+                        RepositoryProvider.of<RoomRepository>(context),
+                    userRepository:
+                        RepositoryProvider.of<UserRepository>(context),
+                    tokenRepository:
+                        RepositoryProvider.of<TokenRepository>(context),
+                  )),
           BlocProvider<AuthenticationBloc>(
             create: (context) => AuthenticationBloc(
               authenticationRepository:
@@ -64,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: HomeView(
           onNavAuthRequest: widget.onNavAuthRequest,
           onNavJoinGameRequest: widget.onNavJoinGameRequest,
+          onNavHostGameRequest: widget.onNavHostGameRequest,
         ),
       ),
     );

@@ -13,10 +13,12 @@ class HomeView extends StatelessWidget {
     super.key,
     required this.onNavAuthRequest,
     required this.onNavJoinGameRequest,
+    required this.onNavHostGameRequest,
   });
 
   final VoidCallback? onNavAuthRequest;
   final VoidCallback? onNavJoinGameRequest;
+  final void Function(String?)? onNavHostGameRequest;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,11 @@ class HomeView extends StatelessWidget {
         BlocListener<HomeBloc, HomeState>(
           listener: (context, state) {
             // TODO(home): handle errors.
+            final roomId = state.roomId;
+            if (roomId.isNotEmpty) {
+              context.read<HomeBloc>().add(CleanRoomId());
+              onNavHostGameRequest?.call(roomId);
+            }
           },
         ),
         BlocListener<AuthenticationBloc, AuthenticationState>(
@@ -86,7 +93,7 @@ class HomeView extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: BridgeButton(
                 onClick: () {
-                  // TODO(lobby): add navigation to Lobby
+                  context.read<HomeBloc>().add(CreateRoom());
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(36),
