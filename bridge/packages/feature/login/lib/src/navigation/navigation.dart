@@ -8,5 +8,5 @@ extension LoginNavigation on BuildContext {
 }
 
 extension LoginNavigationRouter on GoRouter {
-  void navigateToOnboarding() => go(loginRoute);
+  void navigateToLogin() => go(loginRoute);
 }

@@ -16,9 +16,8 @@ class AuthenticationRepository implements Disposable {
   Stream<AuthenticationStatus> get status async* {
     await Future<void>.delayed(const Duration(seconds: 1));
 
-    final token =
-        await _tokenLocalSource.getToken().then((token) => token.orEmpty());
-    if (token.isEmpty) {
+    final token = await _tokenLocalSource.getToken();
+    if (token == null) {
       yield AuthenticationStatus.unauthenticated;
     } else {
       yield AuthenticationStatus.authenticated;
@@ -33,12 +32,12 @@ class AuthenticationRepository implements Disposable {
   }) async {
     await _networkSource
         .login(email: email, password: password)
-        .then((response) {
-      if (response.hasData) {
-        final user = response.data!;
-        _userLocalSource.setUser(
+        .then((result) async {
+      final user = result.getOrNull();
+      if (user != null) {
+        await _userLocalSource.setUser(
             id: user.id, email: email, nickname: user.nickname);
-        _tokenLocalSource.setToken(token: user.token);
+        await _tokenLocalSource.setToken(token: user.token);
       }
     }).whenComplete(() => _controller.add(AuthenticationStatus.authenticated));
   }
@@ -62,7 +61,7 @@ class AuthenticationRepository implements Disposable {
   }) async {
     await _networkSource
         .signup(email: email, nickname: nickname, password: password)
-        .then((value) => login(email: email, password: password));
+        .then((_) => login(email: email, password: password));
   }
 
   @override
