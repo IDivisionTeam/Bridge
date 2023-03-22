@@ -1,5 +1,7 @@
+import 'package:core_common/common.dart';
 import 'package:feature_home/home.dart';
 import 'package:feature_home/home.dart' as home;
+import 'package:feature_lobby/lobby.dart' as lobby;
 import 'package:feature_login/login.dart' as login;
 import 'package:feature_onboarding/onboarding.dart' as onboarding;
 import 'package:feature_room_list/room_list.dart' as roomList;
@@ -8,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
+  final String roomId = 'roomId';
+
   AppRouter() {
     _router = GoRouter(
       routes: [
@@ -36,6 +40,7 @@ class AppRouter {
           routes: [
             _homeRoute,
             _roomListRoute,
+            _lobbyRoute,
           ],
         ),
 
@@ -103,6 +108,7 @@ class AppRouter {
       child: home.HomeScreen(
         onNavAuthRequest: () => context.navigateToLogin(),
         onNavJoinGameRequest: () => context.navigateToRoomList(),
+        onNavHostGameRequest: (roomId) => context.navigateToLobby(roomId),
       ),
     ),
   );
@@ -111,7 +117,20 @@ class AppRouter {
     path: roomList.roomListRoute,
     pageBuilder: (context, state) => MaterialPage(
       key: state.pageKey,
-      child: roomList.RoomListScreen(),
+      child: roomList.RoomListScreen(
+        onNavJoinLobbyRequest: (roomId) => context.navigateToLobby(roomId),
+      ),
+    ),
+  );
+
+  final GoRoute _lobbyRoute = GoRoute(
+    path: '${lobby.lobbyRoute}/:${lobby.lobbyRoomId}',
+    name: lobby.lobbyName,
+    pageBuilder: (context, state) => MaterialPage(
+      key: state.pageKey,
+      child: lobby.LobbyScreen(
+        roomId: state.params[lobby.lobbyRoomId].orEmpty(),
+      ),
     ),
   );
 

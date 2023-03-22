@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:developer' as dev;
 
 import 'package:core_common/common.dart';
 import 'package:core_network/src/model/exception/exceptions.dart';
@@ -29,6 +30,8 @@ mixin ApiMixin {
 
       final body = response.responseBody;
       final statusCode = response.statusCode;
+      // TODO(demo): remove after final testing
+      dev.log('POST($statusCode): $to\n$body');
       if (statusCode == HttpStatus.ok) {
         return NetworkResponse.success(body);
       }
@@ -53,6 +56,8 @@ mixin ApiMixin {
 
       final body = response.responseBody;
       final statusCode = response.statusCode;
+      // TODO(demo): remove after final testing
+      dev.log('GET($statusCode): $from\n$body');
       if (statusCode == HttpStatus.ok) {
         return NetworkResponse.success(body);
       }

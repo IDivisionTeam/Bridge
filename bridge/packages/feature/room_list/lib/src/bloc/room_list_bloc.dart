@@ -18,6 +18,8 @@ class RoomListBloc extends Bloc<RoomListEvent, RoomListState> {
         _tokenRepository = tokenRepository,
         super(const RoomListState.initial()) {
     on<RoomListFetch>(_fetchRoomList);
+    on<JoinLobby>(_joinLobby);
+    on<CleanLobbyId>(_cleanLobbyId);
   }
 
   final RoomRepository _roomRepository;
@@ -39,5 +41,28 @@ class RoomListBloc extends Bloc<RoomListEvent, RoomListState> {
     } catch (_) {
       emit(state.copy(rooms: List.empty()));
     }
+  }
+
+  Future<void> _joinLobby(
+    JoinLobby event,
+    Emitter<RoomListState> emit,
+  ) async {
+    final String? token = await _tokenRepository.getToken();
+    final User? user = await _userRepository.getUser();
+
+    if (token != null && user != null) {
+      final roomId = event.roomId;
+      await _roomRepository.joinRoom(
+          roomId: roomId, token: token, userId: user.id);
+
+      emit(state.copy(roomIdToJoin: roomId));
+    }
+  }
+
+  Future<void> _cleanLobbyId(
+    CleanLobbyId event,
+    Emitter<RoomListState> emit,
+  ) async {
+    emit(state.copy(roomIdToJoin: ''));
   }
 }

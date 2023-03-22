@@ -8,6 +8,14 @@ class RoomRepository implements Disposable {
   final _controller = StreamController<Room>();
   final _networkSource = RoomsNetworkDataSource();
 
+  Stream<Room?> getRoomStream(
+      String roomId, String token, String userId) async* {
+    while (true) {
+      yield await getRoom(roomId: roomId, token: token, userId: userId);
+      await Future<void>.delayed(const Duration(seconds: 1));
+    }
+  }
+
   Future<String?> createRoom({
     required String token,
     required String userId,
