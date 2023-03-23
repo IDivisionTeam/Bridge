@@ -1,7 +1,5 @@
-// TODO(lobby): navigate to Game screen.
-// TODO(lobby): constantly call getRoom
-// TODO(lobby): call SessionAPI.create when host starts the Game
-// TODO(lobby): call SessionAPI.getByUser when Lobby isOpen == false (means game started)
+// TODO(game): call SessionAPI.create when host starts the Game
+// TODO(game): call SessionAPI.getByUser when Lobby isOpen == false (means game started)
 
 import 'dart:math';
 
