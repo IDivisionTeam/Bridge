@@ -1,11 +1,12 @@
-import 'package:bloc/bloc.dart';
 import 'package:core_common/common.dart';
 import 'package:core_data/data.dart';
 import 'package:core_model/model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
 part 'login_event.dart';
+
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
@@ -13,16 +14,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     required AuthenticationRepository authenticationRepository,
   })  : _authenticationRepository = authenticationRepository,
         super(LoginState.pure()) {
-    on<ObscurePassword>(_onObscurePasswordChange);
-    on<EmailChange>(_onEmailChange);
-    on<PasswordChange>(_onPasswordChange);
-    on<SubmitForm>(_onFormSubmit);
+    on<LoginPasswordObscured>(_loginPasswordObscured);
+    on<LoginEmailChanged>(_loginEmailChanged);
+    on<LoginPasswordChanged>(_loginPasswordChanged);
+    on<LoginFormSubmitted>(_loginFormSubmitted);
   }
 
   final AuthenticationRepository _authenticationRepository;
 
-  void _onObscurePasswordChange(
-    ObscurePassword event,
+  void _loginPasswordObscured(
+    LoginPasswordObscured event,
     Emitter<LoginState> emit,
   ) {
     emit(
@@ -32,8 +33,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     );
   }
 
-  void _onEmailChange(
-    EmailChange event,
+  void _loginEmailChanged(
+    LoginEmailChanged event,
     Emitter<LoginState> emit,
   ) {
     final email = UserEmail.dirty(event.email);
@@ -41,8 +42,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Formz.validate([email]);
   }
 
-  void _onPasswordChange(
-    PasswordChange event,
+  void _loginPasswordChanged(
+    LoginPasswordChanged event,
     Emitter<LoginState> emit,
   ) {
     final password = UserPassword.dirty(event.password);
@@ -50,8 +51,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Formz.validate([password]);
   }
 
-  Future<void> _onFormSubmit(
-    SubmitForm event,
+  Future<void> _loginFormSubmitted(
+    LoginFormSubmitted event,
     Emitter<LoginState> emit,
   ) async {
     if (state.isValid) {
@@ -62,6 +63,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           email: state.email.value,
           password: state.password.value,
         );
+
+        // FIXME(login): check response, if error -> do not set status as success
         emit(state.copy(status: FormzSubmissionStatus.success));
       } catch (_) {
         emit(state.copy(status: FormzSubmissionStatus.failure));

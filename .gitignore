@@ -33,11 +33,10 @@ migrate_working_dir/
 **/doc/api/
 **/ios/Flutter/.last_build_id
 **/.dart_tool/
-bridge/.flutter-plugins
-bridge/.flutter-plugins-dependencies
-bridge/.packages
-bridge/.pub-cache/
-bridge/.pub/
+**/.packages
+**/.pub-cache/
+**/.pub/
+**/pubspec.lock
 **/build/
 **/.flutter-plugins
 **/.flutter-plugins-dependencies

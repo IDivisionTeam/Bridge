@@ -1,14 +1,12 @@
-import 'package:core_network/src/model/response/network_response_error.dart';
+class NetworkResponse {
+  final Map<String, dynamic>? data;
+  final Exception? error;
 
-class NetworkResponse<T> {
-  final T? data;
-  final NetworkResponseError? error;
-
-  NetworkResponse.success(T data)
+  NetworkResponse.success(Map<String, dynamic> data)
       : this.data = data,
         error = null;
 
-  NetworkResponse.failure(NetworkResponseError error)
+  NetworkResponse.failure(Exception error)
       : data = null,
         this.error = error;
 

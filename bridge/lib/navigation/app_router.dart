@@ -1,22 +1,66 @@
+import 'package:core_common/common.dart';
+import 'package:core_data/data.dart';
+import 'package:feature_home/home.dart';
+import 'package:feature_home/home.dart' as home;
+import 'package:feature_lobby/lobby.dart' as lobby;
 import 'package:feature_login/login.dart' as login;
 import 'package:feature_onboarding/onboarding.dart' as onboarding;
+import 'package:feature_room_list/room_list.dart' as roomList;
 import 'package:feature_signup/signup.dart' as signup;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
-  AppRouter() {
+  final String roomId = 'roomId';
+
+  AppRouter(
+    AuthenticationRepository authenticationRepository,
+    RoomRepository roomRepository,
+    UserRepository userRepository,
+    TokenRepository tokenRepository,
+  ) {
     _router = GoRouter(
       routes: [
         /* Entry Route */
         GoRoute(
           path: '/',
           builder: (_, __) =>
-              Placeholder(), // TODO(home): replace with progress screen.
+              Placeholder(), // TODO(splash): replace with progress screen.
         ),
 
         /* Main Routes */
-        // TODO(home): add main routes
+        ShellRoute(
+          builder: (context, state, child) {
+            return MaterialApp(
+              theme: ThemeData(
+                // TODO(theme): config theme.
+                primarySwatch: Colors.yellow,
+              ),
+              home: Scaffold(
+                body: SafeArea(
+                  child: child,
+                ),
+              ),
+            );
+          },
+          routes: [
+            _homeRoute(
+              roomRepository,
+              userRepository,
+              tokenRepository,
+            ),
+            _roomListRoute(
+              roomRepository,
+              userRepository,
+              tokenRepository,
+            ),
+            _lobbyRoute(
+              roomRepository,
+              userRepository,
+              tokenRepository,
+            ),
+          ],
+        ),
 
         /* Auth Routes */
         ShellRoute(
@@ -35,8 +79,8 @@ class AppRouter {
             },
             routes: [
               _onboardingRoute,
-              _loginRoute,
-              _signUpRoute,
+              _loginRoute(authenticationRepository),
+              _signUpRoute(authenticationRepository),
             ]),
       ],
     );
@@ -53,25 +97,109 @@ class AppRouter {
     ),
   );
 
-  final GoRoute _loginRoute = GoRoute(
-    path: login.loginRoute,
-    pageBuilder: (context, state) => MaterialPage(
-      key: state.pageKey,
-      child: login.LoginScreen(
-        onNavBackClick: () => context.navigateToOnboarding(),
+  final GoRoute Function(AuthenticationRepository) _loginRoute = (
+    authenticationRepository,
+  ) {
+    return GoRoute(
+      path: login.loginRoute,
+      pageBuilder: (context, state) => MaterialPage(
+        key: state.pageKey,
+        child: login.LoginScreen(
+          authenticationRepository: authenticationRepository,
+          onNavBackClick: () => context.navigateToOnboarding(),
+          onNavHomeRequest: () => context.navigateToHome(),
+        ),
       ),
-    ),
-  );
+    );
+  };
 
-  final GoRoute _signUpRoute = GoRoute(
-    path: signup.signUpRoute,
-    pageBuilder: (context, state) => MaterialPage(
-      key: state.pageKey,
-      child: signup.SignUpScreen(
-        onNavBackClick: () => context.navigateToOnboarding(),
+  final GoRoute Function(AuthenticationRepository) _signUpRoute = (
+    authenticationRepository,
+  ) {
+    return GoRoute(
+      path: signup.signUpRoute,
+      pageBuilder: (context, state) => MaterialPage(
+        key: state.pageKey,
+        child: signup.SignUpScreen(
+          authenticationRepository: authenticationRepository,
+          onNavBackClick: () => context.navigateToOnboarding(),
+          onNavHomeRequest: () => context.navigateToHome(),
+        ),
       ),
-    ),
-  );
+    );
+  };
+
+  final GoRoute Function(
+    RoomRepository,
+    UserRepository,
+    TokenRepository,
+  ) _homeRoute = (
+    roomRepository,
+    userRepository,
+    tokenRepository,
+  ) {
+    return GoRoute(
+      path: home.homeRoute,
+      pageBuilder: (context, state) => MaterialPage(
+        key: state.pageKey,
+        child: home.HomeScreen(
+          roomRepository: roomRepository,
+          userRepository: userRepository,
+          tokenRepository: tokenRepository,
+          onNavAuthRequest: () => context.navigateToLogin(),
+          onNavJoinGameRequest: () => context.navigateToRoomList(),
+          onNavHostGameRequest: (roomId) => context.navigateToLobby(roomId),
+        ),
+      ),
+    );
+  };
+
+  final GoRoute Function(
+    RoomRepository,
+    UserRepository,
+    TokenRepository,
+  ) _roomListRoute = (
+    roomRepository,
+    userRepository,
+    tokenRepository,
+  ) {
+    return GoRoute(
+      path: roomList.roomListRoute,
+      pageBuilder: (context, state) => MaterialPage(
+        key: state.pageKey,
+        child: roomList.RoomListScreen(
+          roomRepository: roomRepository,
+          userRepository: userRepository,
+          tokenRepository: tokenRepository,
+          onNavJoinLobbyRequest: (roomId) => context.navigateToLobby(roomId),
+        ),
+      ),
+    );
+  };
+
+  final GoRoute Function(
+    RoomRepository,
+    UserRepository,
+    TokenRepository,
+  ) _lobbyRoute = (
+    roomRepository,
+    userRepository,
+    tokenRepository,
+  ) {
+    return GoRoute(
+      path: '${lobby.lobbyRoute}/:${lobby.lobbyRoomId}',
+      name: lobby.lobbyName,
+      pageBuilder: (context, state) => MaterialPage(
+        key: state.pageKey,
+        child: lobby.LobbyScreen(
+          roomRepository: roomRepository,
+          userRepository: userRepository,
+          tokenRepository: tokenRepository,
+          roomId: state.params[lobby.lobbyRoomId].orEmpty(),
+        ),
+      ),
+    );
+  };
 
   late final GoRouter _router;
 

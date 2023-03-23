@@ -9,6 +9,8 @@ environment:
 
 dependencies:
   bloc: ^8.1.1
+  core_bloc:
+    path: packages/core/bloc
   core_data:
     path: packages/core/data
   core_model:
@@ -16,12 +18,18 @@ dependencies:
   cupertino_icons: ^1.0.2
   equatable: ^2.0.5
   go_router: ^6.2.0
+  feature_home:
+    path: packages/feature/home
   feature_onboarding:
     path: packages/feature/onboarding
+  feature_lobby:
+    path: packages/feature/lobby
   feature_login:
     path: packages/feature/login
   feature_signup:
     path: packages/feature/signup
+  feature_room_list:
+    path: packages/feature/room_list
   flutter_bloc: ^8.1.2
   flutter:
     sdk: flutter
@@ -30,6 +38,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  melos: ^3.0.0
 
   very_good_analysis: ^4.0.0
 

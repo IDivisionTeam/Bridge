@@ -1,11 +1,12 @@
-import 'package:bloc/bloc.dart';
 import 'package:core_common/common.dart';
 import 'package:core_data/data.dart';
 import 'package:core_model/model.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
 
 part 'signup_event.dart';
+
 part 'signup_state.dart';
 
 class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
@@ -13,19 +14,19 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     required AuthenticationRepository authenticationRepository,
   })  : _authenticationRepository = authenticationRepository,
         super(SignUpState.pure()) {
-    on<ObscurePassword>(_onObscurePasswordChange);
-    on<ObscureConfirmPassword>(_onObscureConfirmPasswordChange);
-    on<EmailChange>(_onEmailChange);
-    on<NicknameChange>(_onNicknameChange);
-    on<PasswordChange>(_onPasswordChange);
-    on<ConfirmPasswordChange>(_onConfirmPasswordChange);
-    on<SubmitForm>(_onFormSubmit);
+    on<SignUpPasswordObscured>(_signUpPasswordObscured);
+    on<SignUpConfirmPasswordObscured>(_signUpConfirmPasswordObscured);
+    on<SignUpEmailChanged>(_signUpEmailChanged);
+    on<SignUpNicknameChanged>(_signUpNicknameChanged);
+    on<SignUpPasswordChanged>(_signUpPasswordChanged);
+    on<SignUpConfirmPasswordChanged>(_signUpConfirmPasswordChanged);
+    on<SignUpFormSubmitted>(_signUpFormSubmitted);
   }
 
   final AuthenticationRepository _authenticationRepository;
 
-  void _onObscurePasswordChange(
-    ObscurePassword event,
+  void _signUpPasswordObscured(
+    SignUpPasswordObscured event,
     Emitter<SignUpState> emit,
   ) {
     emit(
@@ -35,8 +36,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     );
   }
 
-  void _onObscureConfirmPasswordChange(
-    ObscureConfirmPassword event,
+  void _signUpConfirmPasswordObscured(
+    SignUpConfirmPasswordObscured event,
     Emitter<SignUpState> emit,
   ) {
     emit(
@@ -46,8 +47,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     );
   }
 
-  void _onEmailChange(
-    EmailChange event,
+  void _signUpEmailChanged(
+    SignUpEmailChanged event,
     Emitter<SignUpState> emit,
   ) {
     final email = UserEmail.dirty(event.email);
@@ -55,8 +56,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Formz.validate([email]);
   }
 
-  void _onNicknameChange(
-    NicknameChange event,
+  void _signUpNicknameChanged(
+    SignUpNicknameChanged event,
     Emitter<SignUpState> emit,
   ) {
     final nickname = UserNickname.dirty(event.nickname);
@@ -64,8 +65,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Formz.validate([nickname]);
   }
 
-  void _onPasswordChange(
-    PasswordChange event,
+  void _signUpPasswordChanged(
+    SignUpPasswordChanged event,
     Emitter<SignUpState> emit,
   ) {
     final password = UserPassword.dirty(event.password);
@@ -73,8 +74,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Formz.validate([password]);
   }
 
-  void _onConfirmPasswordChange(
-    ConfirmPasswordChange event,
+  void _signUpConfirmPasswordChanged(
+    SignUpConfirmPasswordChanged event,
     Emitter<SignUpState> emit,
   ) {
     final password = UserConfirmPassword.dirty(
@@ -86,8 +87,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     Formz.validate([password]);
   }
 
-  Future<void> _onFormSubmit(
-    SubmitForm event,
+  Future<void> _signUpFormSubmitted(
+    SignUpFormSubmitted event,
     Emitter<SignUpState> emit,
   ) async {
     if (state.isValid) {
@@ -99,6 +100,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           nickname: state.nickname.value,
           password: state.password.value,
         );
+
+        // FIXME(signup): check response, if error -> do not set status as success
         emit(state.copy(status: FormzSubmissionStatus.success));
       } catch (_) {
         emit(state.copy(status: FormzSubmissionStatus.failure));

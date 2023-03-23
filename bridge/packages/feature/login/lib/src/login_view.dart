@@ -1,47 +1,61 @@
 import 'package:core_designsystem/designsystem.dart';
 import 'package:core_model/model.dart';
+import 'package:feature_login/src/bloc/login_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:formz/formz.dart';
-import 'package:feature_login/src/bloc/login_bloc.dart';
 
 class LoginView extends StatelessWidget {
-  const LoginView({super.key, required this.onNavBackClick});
+  const LoginView({
+    super.key,
+    required this.onNavBackClick,
+    required this.onNavHomeRequest,
+  });
 
   final VoidCallback? onNavBackClick;
+  final VoidCallback? onNavHomeRequest;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(
-      builder: (context, state) {
-        return Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.close),
-                  onPressed: () {
-                    onNavBackClick?.call();
-                  },
-                ),
-              ],
-            ),
-            const Spacer(),
-            _UserEmailInput(),
-            const SizedBox(
-              height: 32,
-              width: double.infinity,
-            ),
-            _UserPassword(),
-            const SizedBox(
-              height: 48,
-            ),
-            _UserSubmitButton(),
-            const Spacer(),
-          ],
-        );
+    return BlocListener<LoginBloc, LoginState>(
+      listener: (context, state) {
+        if (state.status.isFailure) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              const SnackBar(content: Text('Authentication Failure')),
+            );
+        }
+
+        if (state.status.isSuccess) onNavHomeRequest?.call();
       },
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  onNavBackClick?.call();
+                },
+              ),
+            ],
+          ),
+          const Spacer(),
+          _UserEmailInput(),
+          const SizedBox(
+            height: 32,
+            width: double.infinity,
+          ),
+          _UserPassword(),
+          const SizedBox(
+            height: 48,
+          ),
+          _UserSubmitButton(),
+          const Spacer(),
+        ],
+      ),
     );
   }
 }
@@ -61,7 +75,7 @@ class _UserEmailInput extends StatelessWidget {
               errorText: _getError(state.email.displayError),
             ),
             onChanged: (value) =>
-                context.read<LoginBloc>().add(EmailChange(value)),
+                context.read<LoginBloc>().add(LoginEmailChanged(value)),
           ),
         );
       },
@@ -100,12 +114,12 @@ class _UserPassword extends StatelessWidget {
               suffixIcon: IconButton(
                 icon: _getIcon(isTextObscured: state.isTextObscured),
                 onPressed: () {
-                  context.read<LoginBloc>().add(ObscurePassword());
+                  context.read<LoginBloc>().add(LoginPasswordObscured());
                 },
               ),
             ),
             onChanged: (value) =>
-                context.read<LoginBloc>().add(PasswordChange(value)),
+                context.read<LoginBloc>().add(LoginPasswordChanged(value)),
           ),
         );
       },
@@ -145,7 +159,7 @@ class _UserSubmitButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: BridgeButton(
             onClick: (state.status.isInitial || state.status.isFailure)
-                ? () => context.read<LoginBloc>().add(SubmitForm())
+                ? () => context.read<LoginBloc>().add(LoginFormSubmitted())
                 : null,
             child: const Text('Login'),
           ),
