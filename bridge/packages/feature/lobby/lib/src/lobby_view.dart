@@ -41,7 +41,7 @@ class LobbyView extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {
-                    context.read<LobbyBloc>().add(DeleteLobby());
+                    context.read<LobbyBloc>().add(LobbyRoomDeleted());
                   },
                 ),
               ],

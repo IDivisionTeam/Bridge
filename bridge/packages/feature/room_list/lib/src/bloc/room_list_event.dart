@@ -7,16 +7,16 @@ abstract class RoomListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class RoomListFetch extends RoomListEvent {
-  const RoomListFetch();
+class RoomListFetched extends RoomListEvent {
+  const RoomListFetched();
 }
 
-class CleanLobbyId extends RoomListEvent {
-  const CleanLobbyId();
+class RoomIdCleaned extends RoomListEvent {
+  const RoomIdCleaned();
 }
 
-class JoinLobby extends RoomListEvent {
-  const JoinLobby(this.roomId);
+class RoomUserJoined extends RoomListEvent {
+  const RoomUserJoined(this.roomId);
 
   final String roomId;
 

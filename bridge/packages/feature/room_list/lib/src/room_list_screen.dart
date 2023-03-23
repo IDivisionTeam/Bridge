@@ -48,7 +48,7 @@ class _RoomListState extends State<RoomListScreen> {
           roomRepository: _roomRepository,
           userRepository: _userRepository,
           tokenRepository: _tokenRepository,
-        )..add(RoomListFetch()),
+        )..add(RoomListFetched()),
         child: RoomListView(
           onNavJoinLobbyRequest: widget.onNavJoinLobbyRequest,
         ),
@@ -58,7 +58,6 @@ class _RoomListState extends State<RoomListScreen> {
 
   @override
   void dispose() {
-    _roomRepository.dispose();
     _userRepository.dispose();
     _tokenRepository.dispose();
     super.dispose();

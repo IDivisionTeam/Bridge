@@ -4,8 +4,8 @@ abstract class LobbyEvent {
   const LobbyEvent();
 }
 
-class _LobbyStatusChanged extends LobbyEvent {
-  const _LobbyStatusChanged(this.room);
+class _LobbyRoomUpdated extends LobbyEvent {
+  const _LobbyRoomUpdated(this.room);
 
   final Room? room;
 
@@ -13,8 +13,8 @@ class _LobbyStatusChanged extends LobbyEvent {
   List<Object?> get props => [room];
 }
 
-class FetchLobby extends LobbyEvent {
-  const FetchLobby(this.roomId);
+class LobbyRoomFetched extends LobbyEvent {
+  const LobbyRoomFetched(this.roomId);
 
   final String roomId;
 
@@ -22,6 +22,6 @@ class FetchLobby extends LobbyEvent {
   List<Object> get props => [roomId];
 }
 
-class DeleteLobby extends LobbyEvent {
-  const DeleteLobby();
+class LobbyRoomDeleted extends LobbyEvent {
+  const LobbyRoomDeleted();
 }

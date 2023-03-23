@@ -53,7 +53,7 @@ class _LobbyState extends State<LobbyScreen> {
           // sessionRepository: _sessionRepository,
           userRepository: _userRepository,
           tokenRepository: _tokenRepository,
-        )..add(FetchLobby(widget._roomId)),
+        )..add(LobbyRoomFetched(widget._roomId)),
         child: LobbyView(),
       ),
     );
@@ -61,7 +61,6 @@ class _LobbyState extends State<LobbyScreen> {
 
   @override
   void dispose() {
-    _roomRepository.dispose();
     _userRepository.dispose();
     _tokenRepository.dispose();
     super.dispose();

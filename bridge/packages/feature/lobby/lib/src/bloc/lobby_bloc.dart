@@ -19,9 +19,9 @@ class LobbyBloc extends Bloc<LobbyEvent, LobbyState> {
         _userRepository = userRepository,
         _tokenRepository = tokenRepository,
         super(const LobbyState.initial()) {
-    on<_LobbyStatusChanged>(_lobbyChanged);
-    on<FetchLobby>(_fetchLobby);
-    on<DeleteLobby>(_deleteLobby);
+    on<_LobbyRoomUpdated>(_lobbyRoomUpdated);
+    on<LobbyRoomFetched>(_lobbyRoomFetched);
+    on<LobbyRoomDeleted>(_lobbyRoomDeleted);
   }
 
   final RoomRepository _roomRepository;
@@ -29,37 +29,38 @@ class LobbyBloc extends Bloc<LobbyEvent, LobbyState> {
   final TokenRepository _tokenRepository;
   late StreamSubscription<Room?> _lobbySubscription;
 
-  Future<void> _lobbyChanged(
-    _LobbyStatusChanged event,
+  Future<void> _lobbyRoomUpdated(
+    _LobbyRoomUpdated event,
     Emitter<LobbyState> emit,
   ) async {
     final User? user = await _userRepository.getUser();
     if (user != null) {
       final hostId = event.room?.host.id;
-      emit(state.copy(
-        status: LobbyStatus.waiting,
-        isUserHost: (hostId != null) && (user.id == hostId),
-        room: event.room,
-      ));
+
+      emit(
+        LobbyState.waiting(
+          room: event.room,
+          isUserHost: (hostId != null) && (user.id == hostId),
+        ),
+      );
     }
   }
 
-  Future<void> _fetchLobby(
-    FetchLobby event,
+  Future<void> _lobbyRoomFetched(
+    LobbyRoomFetched event,
     Emitter<LobbyState> emit,
   ) async {
     final String? token = await _tokenRepository.getToken();
     final User? user = await _userRepository.getUser();
 
     if (token != null && user != null) {
-      _lobbySubscription = _roomRepository
-          .getRoomStream(event.roomId, token, user.id)
-          .listen((room) => add(_LobbyStatusChanged(room)));
+      _lobbySubscription =
+          _roomRepository.getRoomStream(event.roomId, token, user.id).listen((room) => add(_LobbyRoomUpdated(room)));
     }
   }
 
-  Future<void> _deleteLobby(
-    DeleteLobby event,
+  Future<void> _lobbyRoomDeleted(
+    LobbyRoomDeleted event,
     Emitter<LobbyState> emit,
   ) async {
     final roomId = state.room?.id;
@@ -77,10 +78,8 @@ class LobbyBloc extends Bloc<LobbyEvent, LobbyState> {
         );
       }
     }
-    emit(state.copy(
-      status: LobbyStatus.closed,
-      room: null,
-    ));
+
+    emit(LobbyState.closed());
   }
 
   @override

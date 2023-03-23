@@ -1,15 +1,16 @@
 import 'dart:async';
 
-import 'package:core_common/common.dart';
 import 'package:core_model/model.dart';
 import 'package:core_network/network.dart';
 
-class RoomRepository implements Disposable {
-  final _controller = StreamController<Room>();
+class RoomRepository {
   final _networkSource = RoomsNetworkDataSource();
 
   Stream<Room?> getRoomStream(
-      String roomId, String token, String userId) async* {
+    String roomId,
+    String token,
+    String userId,
+  ) async* {
     while (true) {
       yield await getRoom(roomId: roomId, token: token, userId: userId);
       await Future<void>.delayed(const Duration(seconds: 1));
@@ -121,7 +122,4 @@ class RoomRepository implements Disposable {
       );
     });
   }
-
-  @override
-  void dispose() => _controller.close();
 }

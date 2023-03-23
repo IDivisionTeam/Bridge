@@ -16,30 +16,33 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   })  : _roomRepository = roomRepository,
         _userRepository = userRepository,
         _tokenRepository = tokenRepository,
-        super(const HomeState()) {
-    on<CreateRoom>(_createRoom);
-    on<CleanRoomId>(_cleanRoomId);
+        super(const HomeState.initial()) {
+    on<HomeRoomCreated>(_homeRoomCreated);
+    on<HomeRoomIdCleaned>(_homeRoomIdCleaned);
   }
 
   final RoomRepository _roomRepository;
   final UserRepository _userRepository;
   final TokenRepository _tokenRepository;
 
-  Future<void> _createRoom(
-    CreateRoom event,
+  Future<void> _homeRoomCreated(
+    HomeRoomCreated event,
     Emitter<HomeState> emit,
   ) async {
     final String? token = await _tokenRepository.getToken();
     final User? user = await _userRepository.getUser();
+
     if (token != null && user != null) {
-      final roomId =
-          await _roomRepository.createRoom(token: token, userId: user.id);
+      final roomId = await _roomRepository.createRoom(
+        token: token,
+        userId: user.id,
+      );
       emit(state.copy(roomId: roomId));
     }
   }
 
-  Future<void> _cleanRoomId(
-    CleanRoomId event,
+  Future<void> _homeRoomIdCleaned(
+    HomeRoomIdCleaned event,
     Emitter<HomeState> emit,
   ) async {
     emit(state.copy(roomId: ''));

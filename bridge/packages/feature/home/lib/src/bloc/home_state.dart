@@ -4,13 +4,15 @@ class HomeState extends Equatable implements Copyable<HomeState> {
   // TODO(settings): add music on/off state
   // TODO(settings): add vibration on/off state
 
-  const HomeState({this.roomId = ''});
+  const HomeState._({this.roomId = ''});
+
+  const HomeState.initial() : this._();
 
   final String roomId;
 
   @override
   HomeState copy({String? roomId}) {
-    return HomeState(roomId: roomId ?? this.roomId);
+    return HomeState._(roomId: roomId ?? this.roomId);
   }
 
   @override

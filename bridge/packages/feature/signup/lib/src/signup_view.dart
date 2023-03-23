@@ -86,7 +86,7 @@ class _UserNicknameInput extends StatelessWidget {
               errorText: _getError(state.nickname.displayError),
             ),
             onChanged: (value) =>
-                context.read<SignUpBloc>().add(NicknameChange(value)),
+                context.read<SignUpBloc>().add(SignUpNicknameChanged(value)),
           ),
         );
       },
@@ -124,7 +124,7 @@ class _UserEmailInput extends StatelessWidget {
               errorText: _getError(state.email.displayError),
             ),
             onChanged: (value) =>
-                context.read<SignUpBloc>().add(EmailChange(value)),
+                context.read<SignUpBloc>().add(SignUpEmailChanged(value)),
           ),
         );
       },
@@ -165,12 +165,12 @@ class _UserPassword extends StatelessWidget {
               suffixIcon: IconButton(
                 icon: _getIcon(isTextObscured: state.isPasswordObscured),
                 onPressed: () {
-                  context.read<SignUpBloc>().add(ObscurePassword());
+                  context.read<SignUpBloc>().add(SignUpPasswordObscured());
                 },
               ),
             ),
             onChanged: (value) =>
-                context.read<SignUpBloc>().add(PasswordChange(value)),
+                context.read<SignUpBloc>().add(SignUpPasswordChanged(value)),
           ),
         );
       },
@@ -221,12 +221,15 @@ class _UserConfirmPassword extends StatelessWidget {
               suffixIcon: IconButton(
                 icon: _getIcon(isTextObscured: state.isConfirmPasswordObscured),
                 onPressed: () {
-                  context.read<SignUpBloc>().add(ObscureConfirmPassword());
+                  context
+                      .read<SignUpBloc>()
+                      .add(SignUpConfirmPasswordObscured());
                 },
               ),
             ),
-            onChanged: (value) =>
-                context.read<SignUpBloc>().add(ConfirmPasswordChange(value)),
+            onChanged: (value) => context
+                .read<SignUpBloc>()
+                .add(SignUpConfirmPasswordChanged(value)),
           ),
         );
       },
@@ -266,7 +269,7 @@ class _UserSubmitButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: BridgeButton(
             onClick: (state.status.isInitial || state.status.isFailure)
-                ? () => context.read<SignUpBloc>().add(SubmitForm())
+                ? () => context.read<SignUpBloc>().add(SignUpFormSubmitted())
                 : null,
             child: const Text('Sign up'),
           ),
