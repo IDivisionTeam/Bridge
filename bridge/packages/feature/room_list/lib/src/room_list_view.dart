@@ -25,7 +25,7 @@ class _RoomListViewState extends State<RoomListView> {
       listener: (context, state) {
         final roomId = state.roomIdToJoin;
         if (roomId.isNotEmpty) {
-          context.read<RoomListBloc>().add(CleanLobbyId());
+          context.read<RoomListBloc>().add(RoomIdCleaned());
           widget.onNavJoinLobbyRequest?.call(roomId);
         }
       },
@@ -47,7 +47,7 @@ class _RoomListViewState extends State<RoomListView> {
               child: RefreshIndicator(
                 key: _refreshIndicatorKey,
                 onRefresh: () async {
-                  context.read<RoomListBloc>().add(RoomListFetch());
+                  context.read<RoomListBloc>().add(RoomListFetched());
                 },
                 child: ListView.builder(
                   scrollDirection: Axis.vertical,
@@ -63,7 +63,7 @@ class _RoomListViewState extends State<RoomListView> {
                       onTap: () {
                         context
                             .read<RoomListBloc>()
-                            .add(JoinLobby(state.rooms[index].id));
+                            .add(RoomUserJoined(state.rooms[index].id));
                       },
                     );
                   },

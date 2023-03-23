@@ -75,7 +75,7 @@ class _UserEmailInput extends StatelessWidget {
               errorText: _getError(state.email.displayError),
             ),
             onChanged: (value) =>
-                context.read<LoginBloc>().add(EmailChange(value)),
+                context.read<LoginBloc>().add(LoginEmailChanged(value)),
           ),
         );
       },
@@ -114,12 +114,12 @@ class _UserPassword extends StatelessWidget {
               suffixIcon: IconButton(
                 icon: _getIcon(isTextObscured: state.isTextObscured),
                 onPressed: () {
-                  context.read<LoginBloc>().add(ObscurePassword());
+                  context.read<LoginBloc>().add(LoginPasswordObscured());
                 },
               ),
             ),
             onChanged: (value) =>
-                context.read<LoginBloc>().add(PasswordChange(value)),
+                context.read<LoginBloc>().add(LoginPasswordChanged(value)),
           ),
         );
       },
@@ -159,7 +159,7 @@ class _UserSubmitButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: BridgeButton(
             onClick: (state.status.isInitial || state.status.isFailure)
-                ? () => context.read<LoginBloc>().add(SubmitForm())
+                ? () => context.read<LoginBloc>().add(LoginFormSubmitted())
                 : null,
             child: const Text('Login'),
           ),

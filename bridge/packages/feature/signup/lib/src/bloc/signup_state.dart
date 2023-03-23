@@ -1,8 +1,6 @@
 part of 'signup_bloc.dart';
 
-class SignUpState extends Equatable
-    with FormzMixin
-    implements Copyable<SignUpState> {
+class SignUpState extends Equatable with FormzMixin implements Copyable<SignUpState> {
   SignUpState({
     required this.status,
     required this.isPasswordObscured,
@@ -43,8 +41,7 @@ class SignUpState extends Equatable
     return SignUpState(
       status: status ?? this.status,
       isPasswordObscured: isPasswordObscured ?? this.isPasswordObscured,
-      isConfirmPasswordObscured:
-          isConfirmPasswordObscured ?? this.isConfirmPasswordObscured,
+      isConfirmPasswordObscured: isConfirmPasswordObscured ?? this.isConfirmPasswordObscured,
       email: email ?? this.email,
       password: password ?? this.password,
       confirmPassword: confirmPassword ?? this.confirmPassword,

@@ -29,7 +29,7 @@ class HomeView extends StatelessWidget {
             // TODO(home): handle errors.
             final roomId = state.roomId;
             if (roomId.isNotEmpty) {
-              context.read<HomeBloc>().add(CleanRoomId());
+              context.read<HomeBloc>().add(HomeRoomIdCleaned());
               onNavHostGameRequest?.call(roomId);
             }
           },
@@ -93,7 +93,7 @@ class HomeView extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: BridgeButton(
                 onClick: () {
-                  context.read<HomeBloc>().add(CreateRoom());
+                  context.read<HomeBloc>().add(HomeRoomCreated());
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(36),

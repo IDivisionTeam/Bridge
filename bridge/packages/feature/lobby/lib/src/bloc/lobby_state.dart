@@ -15,6 +15,27 @@ class LobbyState extends Equatable implements Copyable<LobbyState> {
 
   const LobbyState.initial() : this._();
 
+  const LobbyState.waiting({
+    required Room? room,
+    required bool isUserHost,
+  }) : this._(
+          status: LobbyStatus.waiting,
+          room: room,
+          isUserHost: isUserHost,
+        );
+
+  const LobbyState.closed()
+      : this._(
+          status: LobbyStatus.closed,
+          room: null,
+        );
+
+  const LobbyState.started()
+      : this._(
+          status: LobbyStatus.started,
+          room: null,
+        );
+
   @override
   LobbyState copy({
     LobbyStatus? status,
@@ -29,5 +50,5 @@ class LobbyState extends Equatable implements Copyable<LobbyState> {
   }
 
   @override
-  List<Object?> get props => [status, room];
+  List<Object?> get props => [status, room, isUserHost];
 }
