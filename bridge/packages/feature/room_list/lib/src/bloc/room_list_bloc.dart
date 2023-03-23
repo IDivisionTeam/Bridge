@@ -56,7 +56,8 @@ class RoomListBloc extends Bloc<RoomListEvent, RoomListState> {
 
     if (token != null && user != null) {
       final roomId = event.roomId;
-      await _roomRepository.joinRoom(roomId: roomId, token: token, userId: user.id);
+      await _roomRepository.joinRoom(
+          roomId: roomId, token: token, userId: user.id);
 
       emit(state.copy(roomIdToJoin: roomId));
     }

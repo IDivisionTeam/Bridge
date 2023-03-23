@@ -7,10 +7,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({
     super.key,
+    required AuthenticationRepository authenticationRepository,
     required this.onNavBackClick,
     required this.onNavHomeRequest,
-  });
+  }) : _authenticationRepository = authenticationRepository;
 
+  final AuthenticationRepository _authenticationRepository;
   final VoidCallback? onNavBackClick;
   final VoidCallback? onNavHomeRequest;
 
@@ -18,8 +20,7 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => SignUpBloc(
-        authenticationRepository:
-            RepositoryProvider.of<AuthenticationRepository>(context),
+        authenticationRepository: _authenticationRepository,
       ),
       child: SignUpView(
         onNavBackClick: onNavBackClick,

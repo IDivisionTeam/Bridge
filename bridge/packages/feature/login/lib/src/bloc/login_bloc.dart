@@ -63,6 +63,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           email: state.email.value,
           password: state.password.value,
         );
+
+        // FIXME(login): check response, if error -> do not set status as success
         emit(state.copy(status: FormzSubmissionStatus.success));
       } catch (_) {
         emit(state.copy(status: FormzSubmissionStatus.failure));

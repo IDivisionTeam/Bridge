@@ -54,8 +54,9 @@ class LobbyBloc extends Bloc<LobbyEvent, LobbyState> {
     final User? user = await _userRepository.getUser();
 
     if (token != null && user != null) {
-      _lobbySubscription =
-          _roomRepository.getRoomStream(event.roomId, token, user.id).listen((room) => add(_LobbyRoomUpdated(room)));
+      _lobbySubscription = _roomRepository
+          .getRoomStream(event.roomId, token, user.id)
+          .listen((room) => add(_LobbyRoomUpdated(room)));
     }
   }
 

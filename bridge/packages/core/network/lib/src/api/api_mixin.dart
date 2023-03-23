@@ -31,7 +31,9 @@ mixin ApiMixin {
       final body = response.responseBody;
       final statusCode = response.statusCode;
       // TODO(demo): remove after final testing
-      dev.log('POST($statusCode): $to\n$body');
+      dev.log('---POST[$statusCode]($to)');
+      dev.log('Request: ${encodable?.json}');
+      dev.log('Response: $body');
       if (statusCode == HttpStatus.ok) {
         return NetworkResponse.success(body);
       }
@@ -57,7 +59,9 @@ mixin ApiMixin {
       final body = response.responseBody;
       final statusCode = response.statusCode;
       // TODO(demo): remove after final testing
-      dev.log('GET($statusCode): $from\n$body');
+      dev.log('---GET[$statusCode]($from)');
+      dev.log('Parameters: $parameters');
+      dev.log('Response: $body');
       if (statusCode == HttpStatus.ok) {
         return NetworkResponse.success(body);
       }
