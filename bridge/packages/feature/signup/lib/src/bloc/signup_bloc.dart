@@ -100,6 +100,8 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
           nickname: state.nickname.value,
           password: state.password.value,
         );
+
+        // FIXME(signup): check response, if error -> do not set status as success
         emit(state.copy(status: FormzSubmissionStatus.success));
       } catch (_) {
         emit(state.copy(status: FormzSubmissionStatus.failure));

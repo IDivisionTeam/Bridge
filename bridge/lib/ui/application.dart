@@ -13,6 +13,7 @@ class Application extends StatefulWidget {
 
 class _ApplicationState extends State<Application> {
   late final AuthenticationRepository _authenticationRepository;
+  late final RoomRepository _roomRepository;
   late final UserRepository _userRepository;
   late final TokenRepository _tokenRepository;
 
@@ -20,6 +21,7 @@ class _ApplicationState extends State<Application> {
   void initState() {
     super.initState();
     _authenticationRepository = AuthenticationRepository();
+    _roomRepository = RoomRepository();
     _userRepository = UserRepository();
     _tokenRepository = TokenRepository();
   }
@@ -27,6 +29,8 @@ class _ApplicationState extends State<Application> {
   @override
   void dispose() {
     _authenticationRepository.dispose();
+    _userRepository.dispose();
+    _tokenRepository.dispose();
     super.dispose();
   }
 
@@ -35,11 +39,17 @@ class _ApplicationState extends State<Application> {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<AuthenticationRepository>(
-            create: (context) => _authenticationRepository),
+          create: (context) => _authenticationRepository,
+        ),
+        RepositoryProvider<RoomRepository>(
+          create: (context) => _roomRepository,
+        ),
         RepositoryProvider<UserRepository>(
-            create: (context) => _userRepository),
+          create: (context) => _userRepository,
+        ),
         RepositoryProvider<TokenRepository>(
-            create: (context) => _tokenRepository),
+          create: (context) => _tokenRepository,
+        ),
       ],
       child: BlocProvider(
         create: (_) => AuthenticationBloc(
@@ -47,7 +57,12 @@ class _ApplicationState extends State<Application> {
           userRepository: _userRepository,
           tokenRepository: _tokenRepository,
         ),
-        child: AppView(),
+        child: AppView(
+          authenticationRepository: _authenticationRepository,
+          roomRepository: _roomRepository,
+          userRepository: _userRepository,
+          tokenRepository: _tokenRepository,
+        ),
       ),
     );
   }
