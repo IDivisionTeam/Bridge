@@ -1,20 +1,17 @@
+import 'package:bridge/ui/application.dart';
+import 'package:core_data/data.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
-}
+  final authenticationRepository = AuthenticationRepository();
+  final roomRepository = RoomRepository();
+  final userRepository = UserRepository();
+  final tokenRepository = TokenRepository();
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Bridge Game',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const Text(''),
-    );
-  }
+  runApp(Application(
+    authenticationRepository: authenticationRepository,
+    roomRepository: roomRepository,
+    userRepository: userRepository,
+    tokenRepository: tokenRepository,
+  ));
 }

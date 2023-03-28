@@ -1,0 +1,19 @@
+name: core_datastore
+description: core - datastore
+publish_to: 'none'
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+
+dependencies:
+  core_common:
+    path: ../common
+  core_model:
+    path: ../model
+  flutter:
+    sdk: flutter
+  flutter_secure_storage: ^8.0.0
+  shared_preferences: ^2.0.18
+
+dev_dependencies:
+  very_good_analysis: ^4.0.0

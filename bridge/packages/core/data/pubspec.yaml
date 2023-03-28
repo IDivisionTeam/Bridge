@@ -1,0 +1,19 @@
+name: core_data
+description: core - data
+publish_to: 'none'
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+
+dependencies:
+  core_datastore:
+    path: ../datastore
+  core_model:
+    path: ../model
+  core_network:
+    path: ../network
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  very_good_analysis: ^4.0.0

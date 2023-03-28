@@ -1,0 +1,16 @@
+name: core_model
+description: core - model
+publish_to: 'none'
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+
+dependencies:
+  core_common:
+    path: ../common
+  flutter:
+    sdk: flutter
+  formz: ^0.5.0+1
+
+dev_dependencies:
+  very_good_analysis: ^4.0.0

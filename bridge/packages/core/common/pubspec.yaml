@@ -1,0 +1,14 @@
+name: core_common
+description: core - common
+publish_to: 'none'
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+
+dependencies:
+  equatable: ^2.0.5
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  very_good_analysis: ^4.0.0
