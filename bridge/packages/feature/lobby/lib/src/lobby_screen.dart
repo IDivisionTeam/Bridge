@@ -8,30 +8,19 @@ import 'bloc/lobby_bloc.dart';
 class LobbyScreen extends StatelessWidget {
   const LobbyScreen({
     super.key,
-    required RoomRepository roomRepository,
-    required UserRepository userRepository,
-    required TokenRepository tokenRepository,
     String roomId = '',
-  })  : _roomId = roomId,
-        _roomRepository = roomRepository,
-        _userRepository = userRepository,
-        _tokenRepository = tokenRepository;
+  }) : _roomId = roomId;
 
   final String _roomId;
-
-  //  final SessionRepository _sessionRepository;
-  final RoomRepository _roomRepository;
-  final UserRepository _userRepository;
-  final TokenRepository _tokenRepository;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => LobbyBloc(
-        roomRepository: _roomRepository,
+        roomRepository: context.read<RoomRepository>(),
         // sessionRepository: _sessionRepository,
-        userRepository: _userRepository,
-        tokenRepository: _tokenRepository,
+        userRepository: context.read<UserRepository>(),
+        tokenRepository: context.read<TokenRepository>(),
       )..add(LobbyRoomFetched(_roomId)),
       child: LobbyView(),
     );

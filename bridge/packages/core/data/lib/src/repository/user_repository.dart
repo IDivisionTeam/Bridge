@@ -2,7 +2,7 @@ import 'package:core_common/common.dart';
 import 'package:core_datastore/datastore.dart';
 import 'package:core_model/model.dart';
 
-class UserRepository implements Disposable {
+class UserRepository {
   final _localSource = UserLocalDataSource();
   User? _user = null;
 
@@ -19,8 +19,7 @@ class UserRepository implements Disposable {
     return _user;
   }
 
-  @override
-  void dispose() {
+  void clear() {
     _user = null;
   }
 }

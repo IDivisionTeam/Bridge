@@ -47,41 +47,12 @@ class HomeView extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Stack(
-              alignment: AlignmentDirectional.center,
-              children: [
-                Container(
-                  color: Colors.yellow,
-                  transformAlignment: Alignment.center,
-                  margin: EdgeInsets.only(top: 64),
-                  transform: Matrix4.rotationZ(170 * math.pi / 180),
-                  child: BridgeCard(
-                    // FIXME(playing-card): randomize rank & suit.
-                    rank: 'J',
-                    suit: 'C',
-                    ratio: 0.2,
-                  ),
-                ),
-                Container(
-                  color: Colors.yellow,
-                  transformAlignment: Alignment.center,
-                  transform: Matrix4.rotationZ(200 * math.pi / 180),
-                  child: BridgeCard(
-                    // FIXME(playing-card): randomize rank & suit.
-                    rank: 'K',
-                    suit: 'D',
-                    ratio: 0.2,
-                  ),
-                ),
-              ],
-            ),
+            _MainGraphic(),
             const SizedBox(height: 64),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: BridgeButton(
-                onClick: () {
-                  onNavJoinGameRequest?.call();
-                },
+                onClick: () => onNavJoinGameRequest?.call(),
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size.fromHeight(36),
                 ),
@@ -132,6 +103,40 @@ class HomeView extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _MainGraphic extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: AlignmentDirectional.center,
+      children: [
+        Container(
+          color: Colors.yellow,
+          transformAlignment: Alignment.center,
+          margin: EdgeInsets.only(top: 64),
+          transform: Matrix4.rotationZ(170 * math.pi / 180),
+          child: BridgeCard(
+            // FIXME(playing-card): randomize rank & suit.
+            rank: 'J',
+            suit: 'C',
+            ratio: 0.2,
+          ),
+        ),
+        Container(
+          color: Colors.yellow,
+          transformAlignment: Alignment.center,
+          transform: Matrix4.rotationZ(200 * math.pi / 180),
+          child: BridgeCard(
+            // FIXME(playing-card): randomize rank & suit.
+            rank: 'K',
+            suit: 'D',
+            ratio: 0.2,
+          ),
+        ),
+      ],
     );
   }
 }

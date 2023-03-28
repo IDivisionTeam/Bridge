@@ -1,5 +1,4 @@
 import 'package:core_common/common.dart';
-import 'package:core_data/data.dart';
 import 'package:feature_home/home.dart';
 import 'package:feature_home/home.dart' as home;
 import 'package:feature_lobby/lobby.dart' as lobby;
@@ -13,12 +12,7 @@ import 'package:go_router/go_router.dart';
 class AppRouter {
   final String roomId = 'roomId';
 
-  AppRouter(
-    AuthenticationRepository authenticationRepository,
-    RoomRepository roomRepository,
-    UserRepository userRepository,
-    TokenRepository tokenRepository,
-  ) {
+  AppRouter() {
     _router = GoRouter(
       routes: [
         /* Entry Route */
@@ -44,21 +38,9 @@ class AppRouter {
             );
           },
           routes: [
-            _homeRoute(
-              roomRepository,
-              userRepository,
-              tokenRepository,
-            ),
-            _roomListRoute(
-              roomRepository,
-              userRepository,
-              tokenRepository,
-            ),
-            _lobbyRoute(
-              roomRepository,
-              userRepository,
-              tokenRepository,
-            ),
+            _homeRoute,
+            _roomListRoute,
+            _lobbyRoute,
           ],
         ),
 
@@ -79,8 +61,8 @@ class AppRouter {
             },
             routes: [
               _onboardingRoute,
-              _loginRoute(authenticationRepository),
-              _signUpRoute(authenticationRepository),
+              _loginRoute,
+              _signUpRoute,
             ]),
       ],
     );
@@ -97,109 +79,60 @@ class AppRouter {
     ),
   );
 
-  final GoRoute Function(AuthenticationRepository) _loginRoute = (
-    authenticationRepository,
-  ) {
-    return GoRoute(
-      path: login.loginRoute,
-      pageBuilder: (context, state) => MaterialPage(
-        key: state.pageKey,
-        child: login.LoginScreen(
-          authenticationRepository: authenticationRepository,
-          onNavBackClick: () => context.navigateToOnboarding(),
-          onNavHomeRequest: () => context.navigateToHome(),
-        ),
+  final GoRoute _loginRoute = GoRoute(
+    path: login.loginRoute,
+    pageBuilder: (context, state) => MaterialPage(
+      key: state.pageKey,
+      child: login.LoginScreen(
+        onNavBackClick: () => context.navigateToOnboarding(),
+        onNavHomeRequest: () => context.navigateToHome(),
       ),
-    );
-  };
+    ),
+  );
 
-  final GoRoute Function(AuthenticationRepository) _signUpRoute = (
-    authenticationRepository,
-  ) {
-    return GoRoute(
-      path: signup.signUpRoute,
-      pageBuilder: (context, state) => MaterialPage(
-        key: state.pageKey,
-        child: signup.SignUpScreen(
-          authenticationRepository: authenticationRepository,
-          onNavBackClick: () => context.navigateToOnboarding(),
-          onNavHomeRequest: () => context.navigateToHome(),
-        ),
+  final GoRoute _signUpRoute = GoRoute(
+    path: signup.signUpRoute,
+    pageBuilder: (context, state) => MaterialPage(
+      key: state.pageKey,
+      child: signup.SignUpScreen(
+        onNavBackClick: () => context.navigateToOnboarding(),
+        onNavHomeRequest: () => context.navigateToHome(),
       ),
-    );
-  };
+    ),
+  );
 
-  final GoRoute Function(
-    RoomRepository,
-    UserRepository,
-    TokenRepository,
-  ) _homeRoute = (
-    roomRepository,
-    userRepository,
-    tokenRepository,
-  ) {
-    return GoRoute(
-      path: home.homeRoute,
-      pageBuilder: (context, state) => MaterialPage(
-        key: state.pageKey,
-        child: home.HomeScreen(
-          roomRepository: roomRepository,
-          userRepository: userRepository,
-          tokenRepository: tokenRepository,
-          onNavAuthRequest: () => context.navigateToLogin(),
-          onNavJoinGameRequest: () => context.navigateToRoomList(),
-          onNavHostGameRequest: (roomId) => context.navigateToLobby(roomId),
-        ),
+  final GoRoute _homeRoute = GoRoute(
+    path: home.homeRoute,
+    pageBuilder: (context, state) => MaterialPage(
+      key: state.pageKey,
+      child: home.HomeScreen(
+        onNavAuthRequest: () => context.navigateToLogin(),
+        onNavJoinGameRequest: () => context.navigateToRoomList(),
+        onNavHostGameRequest: (roomId) => context.navigateToLobby(roomId),
       ),
-    );
-  };
+    ),
+  );
 
-  final GoRoute Function(
-    RoomRepository,
-    UserRepository,
-    TokenRepository,
-  ) _roomListRoute = (
-    roomRepository,
-    userRepository,
-    tokenRepository,
-  ) {
-    return GoRoute(
-      path: roomList.roomListRoute,
-      pageBuilder: (context, state) => MaterialPage(
-        key: state.pageKey,
-        child: roomList.RoomListScreen(
-          roomRepository: roomRepository,
-          userRepository: userRepository,
-          tokenRepository: tokenRepository,
-          onNavJoinLobbyRequest: (roomId) => context.navigateToLobby(roomId),
-        ),
+  final GoRoute _roomListRoute = GoRoute(
+    path: roomList.roomListRoute,
+    pageBuilder: (context, state) => MaterialPage(
+      key: state.pageKey,
+      child: roomList.RoomListScreen(
+        onNavJoinLobbyRequest: (roomId) => context.navigateToLobby(roomId),
       ),
-    );
-  };
+    ),
+  );
 
-  final GoRoute Function(
-    RoomRepository,
-    UserRepository,
-    TokenRepository,
-  ) _lobbyRoute = (
-    roomRepository,
-    userRepository,
-    tokenRepository,
-  ) {
-    return GoRoute(
-      path: '${lobby.lobbyRoute}/:${lobby.lobbyRoomId}',
-      name: lobby.lobbyName,
-      pageBuilder: (context, state) => MaterialPage(
-        key: state.pageKey,
-        child: lobby.LobbyScreen(
-          roomRepository: roomRepository,
-          userRepository: userRepository,
-          tokenRepository: tokenRepository,
-          roomId: state.params[lobby.lobbyRoomId].orEmpty(),
-        ),
+  final GoRoute _lobbyRoute = GoRoute(
+    path: '${lobby.lobbyRoute}/:${lobby.lobbyRoomId}',
+    name: lobby.lobbyName,
+    pageBuilder: (context, state) => MaterialPage(
+      key: state.pageKey,
+      child: lobby.LobbyScreen(
+        roomId: state.params[lobby.lobbyRoomId].orEmpty(),
       ),
-    );
-  };
+    ),
+  );
 
   late final GoRouter _router;
 

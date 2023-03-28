@@ -31,16 +31,12 @@ class LoginView extends StatelessWidget {
       },
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.close),
-                onPressed: () {
-                  onNavBackClick?.call();
-                },
-              ),
-            ],
+          Container(
+            alignment: Alignment.centerRight,
+            child: IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: () => onNavBackClick?.call(),
+            ),
           ),
           const Spacer(),
           _UserEmailInput(),
@@ -49,9 +45,7 @@ class LoginView extends StatelessWidget {
             width: double.infinity,
           ),
           _UserPassword(),
-          const SizedBox(
-            height: 48,
-          ),
+          const SizedBox(height: 48),
           _UserSubmitButton(),
           const Spacer(),
         ],

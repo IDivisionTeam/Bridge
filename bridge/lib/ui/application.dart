@@ -4,51 +4,38 @@ import 'package:core_data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Application extends StatefulWidget {
-  const Application({super.key});
+class Application extends StatelessWidget {
+  const Application({
+    super.key,
+    required AuthenticationRepository authenticationRepository,
+    required RoomRepository roomRepository,
+    required UserRepository userRepository,
+    required TokenRepository tokenRepository,
+  })  : _authenticationRepository = authenticationRepository,
+        _roomRepository = roomRepository,
+        _userRepository = userRepository,
+        _tokenRepository = tokenRepository;
 
-  @override
-  State<StatefulWidget> createState() => _ApplicationState();
-}
-
-class _ApplicationState extends State<Application> {
-  late final AuthenticationRepository _authenticationRepository;
-  late final RoomRepository _roomRepository;
-  late final UserRepository _userRepository;
-  late final TokenRepository _tokenRepository;
-
-  @override
-  void initState() {
-    super.initState();
-    _authenticationRepository = AuthenticationRepository();
-    _roomRepository = RoomRepository();
-    _userRepository = UserRepository();
-    _tokenRepository = TokenRepository();
-  }
-
-  @override
-  void dispose() {
-    _authenticationRepository.dispose();
-    _userRepository.dispose();
-    _tokenRepository.dispose();
-    super.dispose();
-  }
+  final AuthenticationRepository _authenticationRepository;
+  final RoomRepository _roomRepository;
+  final UserRepository _userRepository;
+  final TokenRepository _tokenRepository;
 
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
       providers: [
-        RepositoryProvider<AuthenticationRepository>(
-          create: (context) => _authenticationRepository,
+        RepositoryProvider<AuthenticationRepository>.value(
+          value: _authenticationRepository,
         ),
-        RepositoryProvider<RoomRepository>(
-          create: (context) => _roomRepository,
+        RepositoryProvider<RoomRepository>.value(
+          value: _roomRepository,
         ),
-        RepositoryProvider<UserRepository>(
-          create: (context) => _userRepository,
+        RepositoryProvider<UserRepository>.value(
+          value: _userRepository,
         ),
-        RepositoryProvider<TokenRepository>(
-          create: (context) => _tokenRepository,
+        RepositoryProvider<TokenRepository>.value(
+          value: _tokenRepository,
         ),
       ],
       child: BlocProvider(
@@ -57,12 +44,7 @@ class _ApplicationState extends State<Application> {
           userRepository: _userRepository,
           tokenRepository: _tokenRepository,
         ),
-        child: AppView(
-          authenticationRepository: _authenticationRepository,
-          roomRepository: _roomRepository,
-          userRepository: _userRepository,
-          tokenRepository: _tokenRepository,
-        ),
+        child: AppView(),
       ),
     );
   }

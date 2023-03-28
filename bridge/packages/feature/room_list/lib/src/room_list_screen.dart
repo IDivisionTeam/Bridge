@@ -7,17 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class RoomListScreen extends StatelessWidget {
   const RoomListScreen({
     super.key,
-    required RoomRepository roomRepository,
-    required UserRepository userRepository,
-    required TokenRepository tokenRepository,
     this.onNavJoinLobbyRequest,
-  })  : _roomRepository = roomRepository,
-        _userRepository = userRepository,
-        _tokenRepository = tokenRepository;
-
-  final RoomRepository _roomRepository;
-  final UserRepository _userRepository;
-  final TokenRepository _tokenRepository;
+  });
 
   final void Function(String?)? onNavJoinLobbyRequest;
 
@@ -25,9 +16,9 @@ class RoomListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => RoomListBloc(
-        roomRepository: _roomRepository,
-        userRepository: _userRepository,
-        tokenRepository: _tokenRepository,
+        roomRepository: context.read<RoomRepository>(),
+        userRepository: context.read<UserRepository>(),
+        tokenRepository: context.read<TokenRepository>(),
       )..add(RoomListFetched()),
       child: RoomListView(
         onNavJoinLobbyRequest: onNavJoinLobbyRequest,

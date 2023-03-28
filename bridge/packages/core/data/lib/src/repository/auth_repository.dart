@@ -30,28 +30,39 @@ class AuthenticationRepository implements Disposable {
     required String email,
     required String password,
   }) async {
-    await _networkSource
-        .login(email: email, password: password)
-        .then((result) async {
-      final user = result.getOrNull();
-      if (user != null) {
-        await _userLocalSource.setUser(
-            id: user.id, email: email, nickname: user.nickname);
-        await _tokenLocalSource.setToken(token: user.token);
-      }
-    }).whenComplete(() => _controller.add(AuthenticationStatus.authenticated));
+    final result = await _networkSource.login(
+      email: email,
+      password: password,
+    );
+
+    final user = result.getOrNull();
+    if (user != null) {
+      await _userLocalSource.setUser(
+        id: user.id,
+        email: email,
+        nickname: user.nickname,
+      );
+      await _tokenLocalSource.setToken(token: user.token);
+
+      _controller.add(AuthenticationStatus.authenticated);
+      return;
+    }
+
+    _controller.add(AuthenticationStatus.unauthenticated);
   }
 
   Future<void> logout({
     required String email,
     required String token,
   }) async {
-    await _networkSource.logout(email: email, token: token).then((_) {
-      _tokenLocalSource.deleteToken();
-      _userLocalSource.deleteUser();
-    }).whenComplete(() {
+    final result = await _networkSource.logout(email: email, token: token);
+
+    final isSuccessful = result.getOrDefault(false);
+    if (isSuccessful) {
+      await _tokenLocalSource.deleteToken();
+      await _userLocalSource.deleteUser();
       _controller.add(AuthenticationStatus.unauthenticated);
-    });
+    }
   }
 
   Future<void> signup({
@@ -59,9 +70,14 @@ class AuthenticationRepository implements Disposable {
     required String nickname,
     required String password,
   }) async {
-    await _networkSource
-        .signup(email: email, nickname: nickname, password: password)
-        .then((_) => login(email: email, password: password));
+    final result = await _networkSource.signup(
+      email: email,
+      nickname: nickname,
+      password: password,
+    );
+
+    final isSuccessful = result.getOrDefault(false);
+    if (isSuccessful) login(email: email, password: password);
   }
 
   @override

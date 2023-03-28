@@ -32,16 +32,12 @@ class _RoomListViewState extends State<RoomListView> {
       builder: (context, state) {
         return Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    context.pop();
-                  },
-                ),
-              ],
+            Container(
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => context.pop(),
+              ),
             ),
             Expanded(
               child: RefreshIndicator(
@@ -58,7 +54,8 @@ class _RoomListViewState extends State<RoomListView> {
 
                     return ListTile(
                       title: Text('${room.host.nickname}\`s room'),
-                      leading: Icon(_getLockIcon(room.isOpen)),
+                      leading: Icon(
+                          room.isOpen ? Icons.lock_open : Icons.lock_outline),
                       trailing: Text('${room.users.length}/5'),
                       onTap: () {
                         context
@@ -74,10 +71,5 @@ class _RoomListViewState extends State<RoomListView> {
         );
       },
     );
-  }
-
-  IconData _getLockIcon(bool isOpen) {
-    if (isOpen) return Icons.lock_open;
-    return Icons.lock_outline;
   }
 }

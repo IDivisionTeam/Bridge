@@ -71,4 +71,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       }
     }
   }
+
+  @override
+  Future<void> close() {
+    _authenticationRepository.dispose();
+    return super.close();
+  }
 }

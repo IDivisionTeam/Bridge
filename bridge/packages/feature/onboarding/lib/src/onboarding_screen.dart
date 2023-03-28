@@ -51,18 +51,14 @@ class OnboardingScreen extends StatelessWidget {
             ),
           ),
           BridgeButton(
-            onClick: () {
-              onSignUpNavClick?.call();
-            },
+            onClick: () => onSignUpNavClick?.call(),
             style: ElevatedButton.styleFrom(
               minimumSize: const Size.fromHeight(36),
             ),
             child: const Text('Sign up'),
           ),
           BridgeButton(
-            onClick: () {
-              onLoginNavClick?.call();
-            },
+            onClick: () => onLoginNavClick?.call(),
             style: ElevatedButton.styleFrom(
               minimumSize: const Size.fromHeight(36),
             ),

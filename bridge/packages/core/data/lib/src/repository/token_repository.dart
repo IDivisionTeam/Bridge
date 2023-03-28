@@ -1,7 +1,6 @@
-import 'package:core_common/common.dart';
 import 'package:core_datastore/datastore.dart';
 
-class TokenRepository implements Disposable {
+class TokenRepository {
   final _localSource = TokenLocalDataSource();
   String? _token = null;
 
@@ -18,8 +17,7 @@ class TokenRepository implements Disposable {
     return _token;
   }
 
-  @override
-  void dispose() {
+  void clear() {
     _token = null;
   }
 }

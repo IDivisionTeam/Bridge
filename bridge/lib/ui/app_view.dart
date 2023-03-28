@@ -7,20 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppView extends StatelessWidget {
-  AppView({
-    super.key,
-    required AuthenticationRepository authenticationRepository,
-    required RoomRepository roomRepository,
-    required UserRepository userRepository,
-    required TokenRepository tokenRepository,
-  }) : _appRouter = AppRouter(
-          authenticationRepository,
-          roomRepository,
-          userRepository,
-          tokenRepository,
-        );
+  AppView({super.key});
 
-  final AppRouter _appRouter;
+  final AppRouter _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {

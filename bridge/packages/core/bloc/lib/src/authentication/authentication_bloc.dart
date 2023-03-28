@@ -34,6 +34,7 @@ class AuthenticationBloc
   @override
   Future<void> close() {
     _authenticationStatusSubscription.cancel();
+    _authenticationRepository.dispose();
     return super.close();
   }
 
@@ -65,6 +66,8 @@ class AuthenticationBloc
 
     if (user != null && token != null) {
       await _authenticationRepository.logout(email: user.email, token: token);
+      _userRepository.clear();
+      _tokenRepository.clear();
     }
   }
 }
