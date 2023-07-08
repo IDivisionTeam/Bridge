@@ -1,0 +1,23 @@
+name: feature_game
+description: feature - game
+publish_to: 'none'
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+
+dependencies:
+  core_data:
+    path: ../../core/data
+  core_common:
+    path: ../../core/common
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^4.0.0
+
+flutter:
+  assets:
+    - '../../../graphics/'
